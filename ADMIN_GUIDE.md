@@ -4,6 +4,8 @@
 
 Complete admin panel for managing your jewelry e-commerce store. Built with Next.js 14, TypeScript, Supabase, and Tailwind CSS.
 
+**Note:** Authentication has been temporarily removed to allow easy access during development. User authentication will be added later.
+
 ## 🚀 Getting Started
 
 ### 1. Database Setup
@@ -17,12 +19,10 @@ Run the SQL schema in your Supabase SQL Editor:
 The schema includes:
 - ✅ Products table with admin fields (SKU, cost price, SEO, etc.)
 - ✅ Orders table with payment tracking
-- ✅ Admin users table for authentication
 - ✅ Stock history for inventory tracking
 - ✅ Price history for pricing analytics
 - ✅ Expenses for financial management
 - ✅ Customer analytics
-- ✅ Activity logs
 - ✅ Store settings
 
 ### 2. Environment Setup
@@ -35,34 +35,16 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
 SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
 ```
 
-### 3. Create Admin User
-
-After running the database schema, create your first admin user:
-
-```sql
--- In Supabase SQL Editor
-INSERT INTO admin_users (email, password_hash, full_name, role) VALUES
-('admin@raregems.com', '$2b$10$YourBcryptHashHere', 'Admin User', 'super_admin');
-```
-
-Or use bcrypt to hash your password:
-```bash
-npm install -g bcrypt-cli
-bcrypt your_password
-```
-
-## 🔐 Access Admin Panel
+## 🔓 Access Admin Panel (Open Access)
 
 1. Start the development server:
    ```bash
    npm run dev
    ```
 
-2. Navigate to: `http://localhost:3000/admin/login`
+2. Navigate to: `http://localhost:3000/admin`
 
-3. Login with your admin credentials:
-   - Email: `admin@raregems.com`
-   - Password: `admin123` (or your custom password)
+3. The admin panel is now freely accessible without login!
 
 ## 📊 Features Overview
 
@@ -128,22 +110,18 @@ bcrypt your_password
 - **Database:** Supabase (PostgreSQL)
 - **Styling:** Tailwind CSS
 - **Charts:** Recharts
-- **Tables:** React Table (@tanstack/react-table)
-- **Forms:** React Hook Form + Zod
-- **State:** Zustand + React Query
-- **Auth:** Custom auth with bcrypt
 - **Icons:** Lucide React
 - **Notifications:** React Hot Toast
+- **Date Handling:** date-fns
+- **State:** Zustand
 
 ### File Structure
 
 ```
 app/
 ├── admin/
-│   ├── layout.tsx           # Protected admin layout with sidebar
+│   ├── layout.tsx           # Admin layout with sidebar
 │   ├── page.tsx             # Dashboard
-│   ├── login/
-│   │   └── page.tsx         # Admin login
 │   ├── products/
 │   │   └── page.tsx         # Product management
 │   ├── orders/
@@ -167,18 +145,18 @@ components/
 
 lib/
 ├── admin-types.ts           # TypeScript type definitions
-├── admin-auth.ts            # Authentication utilities
 └── admin-api.ts             # API helper functions
 ```
 
 ## 🔒 Security Features
 
-- ✅ **Authentication** - Session-based admin login
-- ✅ **Protected routes** - Automatic redirect for unauthenticated users
-- ✅ **Activity logging** - Track all admin actions
-- ✅ **Password hashing** - Bcrypt for secure password storage
-- ✅ **Session management** - 24-hour session expiry
-- ✅ **Role-based access** - Super admin, admin, manager roles
+**Note:** Authentication is temporarily disabled for development. Security features will be added later:
+- 📝 **Planned:** Session-based admin login
+- 📝 **Planned:** Protected routes with role-based access
+- 📝 **Planned:** Activity logging for audit trail
+- 📝 **Planned:** Password hashing with bcrypt
+- 📝 **Planned:** Session management
+- 📝 **Planned:** Multi-user support with different roles
 
 ## 📈 Key Advantages
 
@@ -292,7 +270,6 @@ For issues or questions, check:
 - Database schema: `supabase-schema.sql`
 - Type definitions: `lib/admin-types.ts`
 - API functions: `lib/admin-api.ts`
-- Auth utilities: `lib/admin-auth.ts`
 
 ---
 

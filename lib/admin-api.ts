@@ -1,5 +1,4 @@
 import { supabase } from './supabase'
-import { adminAuth } from './admin-auth'
 import {
   DashboardStats,
   StockHistory,
@@ -102,9 +101,6 @@ export const adminApi = {
   },
 
   async createProduct(product: Partial<AdminProduct>): Promise<{ success: boolean; error?: string; data?: AdminProduct }> {
-    const user = adminAuth.getCurrentUser()
-    if (!user) return { success: false, error: 'Unauthorized' }
-
     const { data, error } = await supabase
       .from('products')
       .insert(product)
@@ -113,15 +109,10 @@ export const adminApi = {
 
     if (error) return { success: false, error: error.message }
 
-    await adminAuth.logActivity(user.email, 'create_product', 'products', data.id, product)
-
     return { success: true, data: data as AdminProduct }
   },
 
   async updateProduct(id: string, updates: Partial<AdminProduct>): Promise<{ success: boolean; error?: string }> {
-    const user = adminAuth.getCurrentUser()
-    if (!user) return { success: false, error: 'Unauthorized' }
-
     // Check for price changes
     if (updates.price) {
       const current = await this.getProduct(id)
@@ -130,7 +121,7 @@ export const adminApi = {
           product_id: id,
           previous_price: current.price,
           new_price: updates.price,
-          changed_by: user.email
+          changed_by: 'Admin'
         })
       }
     }
@@ -145,7 +136,7 @@ export const adminApi = {
           new_stock: updates.stock,
           change_amount: updates.stock - current.stock,
           change_reason: 'Manual update',
-          changed_by: user.email
+          changed_by: 'Admin'
         })
       }
     }
@@ -157,23 +148,16 @@ export const adminApi = {
 
     if (error) return { success: false, error: error.message }
 
-    await adminAuth.logActivity(user.email, 'update_product', 'products', id, updates)
-
     return { success: true }
   },
 
   async deleteProduct(id: string): Promise<{ success: boolean; error?: string }> {
-    const user = adminAuth.getCurrentUser()
-    if (!user) return { success: false, error: 'Unauthorized' }
-
     const { error } = await supabase
       .from('products')
       .delete()
       .eq('id', id)
 
     if (error) return { success: false, error: error.message }
-
-    await adminAuth.logActivity(user.email, 'delete_product', 'products', id, {})
 
     return { success: true }
   },
@@ -205,9 +189,6 @@ export const adminApi = {
   },
 
   async updateOrderStatus(id: string, status: string): Promise<{ success: boolean; error?: string }> {
-    const user = adminAuth.getCurrentUser()
-    if (!user) return { success: false, error: 'Unauthorized' }
-
     const { error } = await supabase
       .from('orders')
       .update({ status })
@@ -215,22 +196,17 @@ export const adminApi = {
 
     if (error) return { success: false, error: error.message }
 
-    await adminAuth.logActivity(user.email, 'update_order_status', 'orders', id, { status })
-
     return { success: true }
   },
 
   async addOrderNote(orderId: string, note: string, isInternal: boolean = true): Promise<{ success: boolean; error?: string }> {
-    const user = adminAuth.getCurrentUser()
-    if (!user) return { success: false, error: 'Unauthorized' }
-
     const { error } = await supabase
       .from('order_notes')
       .insert({
         order_id: orderId,
         note,
         is_internal: isInternal,
-        created_by: user.email
+        created_by: 'Admin'
       })
 
     if (error) return { success: false, error: error.message }
@@ -284,19 +260,14 @@ export const adminApi = {
   },
 
   async addExpense(expense: Omit<Expense, 'id' | 'created_at' | 'created_by'>): Promise<{ success: boolean; error?: string }> {
-    const user = adminAuth.getCurrentUser()
-    if (!user) return { success: false, error: 'Unauthorized' }
-
     const { error } = await supabase
       .from('expenses')
       .insert({
         ...expense,
-        created_by: user.email
+        created_by: 'Admin'
       })
 
     if (error) return { success: false, error: error.message }
-
-    await adminAuth.logActivity(user.email, 'add_expense', 'expenses', null, expense)
 
     return { success: true }
   },
@@ -351,9 +322,6 @@ export const adminApi = {
   },
 
   async updateSetting(key: string, value: any): Promise<{ success: boolean; error?: string }> {
-    const user = adminAuth.getCurrentUser()
-    if (!user) return { success: false, error: 'Unauthorized' }
-
     const { error } = await supabase
       .from('store_settings')
       .upsert({
@@ -362,8 +330,6 @@ export const adminApi = {
       })
 
     if (error) return { success: false, error: error.message }
-
-    await adminAuth.logActivity(user.email, 'update_setting', 'store_settings', null, { key, value })
 
     return { success: true }
   }

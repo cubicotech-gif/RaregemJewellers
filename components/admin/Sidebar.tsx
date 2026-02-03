@@ -1,8 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
-import { adminAuth } from '@/lib/admin-auth'
+import { usePathname } from 'next/navigation'
 import {
   LayoutDashboard,
   Package,
@@ -11,13 +10,11 @@ import {
   BarChart3,
   DollarSign,
   Settings,
-  LogOut,
   Menu,
   X,
   Boxes
 } from 'lucide-react'
 import { useState } from 'react'
-import toast from 'react-hot-toast'
 
 interface NavItem {
   name: string
@@ -38,16 +35,7 @@ const navigation: NavItem[] = [
 
 export default function Sidebar() {
   const pathname = usePathname()
-  const router = useRouter()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-
-  const user = adminAuth.getCurrentUser()
-
-  const handleLogout = async () => {
-    await adminAuth.logout()
-    toast.success('Logged out successfully')
-    router.push('/admin/login')
-  }
 
   const isActive = (href: string) => {
     if (href === '/admin') {
@@ -87,23 +75,8 @@ export default function Sidebar() {
           <p className="text-purple-300 text-sm">Admin Panel</p>
         </div>
 
-        {/* User Info */}
-        <div className="p-4 border-b border-purple-700/50">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-purple-700 rounded-full flex items-center justify-center">
-              <span className="font-semibold text-lg">
-                {user?.full_name?.charAt(0) || user?.email?.charAt(0).toUpperCase()}
-              </span>
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="font-medium truncate">{user?.full_name || 'Admin'}</p>
-              <p className="text-xs text-purple-300 truncate">{user?.email}</p>
-            </div>
-          </div>
-        </div>
-
         {/* Navigation */}
-        <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
+        <nav className="flex-1 p-4 space-y-1 overflow-y-auto h-[calc(100vh-88px)]">
           {navigation.map((item) => {
             const Icon = item.icon
             const active = isActive(item.href)
@@ -128,17 +101,6 @@ export default function Sidebar() {
             )
           })}
         </nav>
-
-        {/* Logout Button */}
-        <div className="p-4 border-t border-purple-700/50">
-          <button
-            onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-4 py-3 text-purple-100 hover:bg-purple-700/50 rounded-lg transition-all duration-200"
-          >
-            <LogOut className="w-5 h-5" />
-            <span className="font-medium">Logout</span>
-          </button>
-        </div>
       </div>
     </>
   )

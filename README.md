@@ -101,23 +101,17 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) to see your website!
 
-## 🔐 Accessing the Admin Panel
+## 🔓 Accessing the Admin Panel (Open Access)
+
+The admin panel is currently accessible without authentication for ease of development.
 
 1. **Set up the database** - Run the SQL schema from `supabase-schema.sql` in your Supabase SQL Editor
 
-2. **Create an admin user**:
-   ```sql
-   INSERT INTO admin_users (email, password_hash, full_name, role) VALUES
-   ('admin@raregems.com', '$2b$10$YourHashHere', 'Admin User', 'super_admin');
-   ```
+2. **Access the admin panel**:
+   - Local: [http://localhost:3000/admin](http://localhost:3000/admin)
+   - Production: `https://your-domain.vercel.app/admin`
 
-3. **Access the admin panel**:
-   - Local: [http://localhost:3000/admin/login](http://localhost:3000/admin/login)
-   - Production: `https://your-domain.vercel.app/admin/login`
-
-4. **Default credentials** (for demo):
-   - Email: `admin@raregems.com`
-   - Password: `admin123`
+**Note:** User authentication will be added later. For now, focus on building the website features!
 
 **📖 Full admin documentation:** See [ADMIN_GUIDE.md](ADMIN_GUIDE.md)
 
