@@ -33,7 +33,8 @@ export default function AddProductModal({ isOpen, onClose, onSuccess }: AddProdu
     setLoading(true)
 
     try {
-      const productData = {
+      // Start with required fields only
+      const productData: any = {
         name: formData.name,
         description: formData.description,
         price: Number(formData.price),
@@ -42,9 +43,15 @@ export default function AddProductModal({ isOpen, onClose, onSuccess }: AddProdu
         metal_type: formData.metal_type,
         stock: Number(formData.stock),
         featured: formData.featured,
-        sku: formData.sku || null,
-        cost_price: formData.cost_price ? Number(formData.cost_price) : null,
         images: []
+      }
+
+      // Add optional admin fields only if they have values
+      if (formData.sku) {
+        productData.sku = formData.sku
+      }
+      if (formData.cost_price) {
+        productData.cost_price = Number(formData.cost_price)
       }
 
       const result = await adminApi.createProduct(productData)
