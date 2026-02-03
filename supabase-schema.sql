@@ -237,11 +237,11 @@ SELECT
     p.name,
     p.price,
     p.images,
-    COUNT(o.id) as order_count,
-    SUM((item->>'quantity')::int) as total_sold
+    COUNT(DISTINCT o.id) as order_count,
+    COALESCE(SUM((item_data->>'quantity')::int), 0) as total_sold
 FROM products p
-LEFT JOIN orders o ON o.items::jsonb @> jsonb_build_array(jsonb_build_object('product_id', p.id::text))
-WHERE o.status != 'cancelled'
+LEFT JOIN orders o ON o.status != 'cancelled'
+LEFT JOIN LATERAL jsonb_array_elements(o.items) AS item_data ON (item_data->>'product_id')::text = p.id::text
 GROUP BY p.id, p.name, p.price, p.images
 ORDER BY total_sold DESC
 LIMIT 10;
