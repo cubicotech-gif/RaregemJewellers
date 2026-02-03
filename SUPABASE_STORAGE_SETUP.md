@@ -2,7 +2,19 @@
 
 This guide explains how to set up Supabase Storage for product media uploads (images, videos, and 3D models).
 
-## Step 1: Create Storage Bucket
+## Quick Start (TL;DR)
+
+1. Go to Supabase Dashboard → Storage
+2. Click "Create a new bucket"
+3. Name: `product-media`, Public: ✅ ON
+4. Click "Create bucket"
+5. Go to bucket → Policies tab
+6. Click "New Policy" → "Get started quickly" → "Allow public access"
+7. Done! Test upload in admin panel
+
+## Detailed Instructions
+
+### Step 1: Create Storage Bucket
 
 1. Go to your Supabase project dashboard at https://supabase.com/dashboard
 2. Navigate to **Storage** in the left sidebar
@@ -14,53 +26,94 @@ This guide explains how to set up Supabase Storage for product media uploads (im
 
 ## Step 2: Configure Bucket Policies
 
-After creating the bucket, you need to set up policies to allow uploads and public access:
+After creating the bucket, you need to set up policies to allow uploads and public access.
 
-1. Click on your `product-media` bucket
-2. Go to **Policies** tab
-3. Click **New Policy**
+**IMPORTANT**: Use the Supabase UI method below, as it's more reliable than SQL commands.
+
+### Method 1: Using Supabase UI (Recommended)
+
+1. Click on your `product-media` bucket in the Storage section
+2. Go to the **Policies** tab
+3. You'll see a section for creating policies
 
 ### Policy 1: Allow Public Read Access
 
+Click **"New Policy"** and select **"For full customization"**, then:
+- **Policy name**: `Public Access`
+- **Allowed operation**: `SELECT`
+- **Policy definition**: Select the "Custom" option
+- **Target roles**: Leave default or select `public`
+- **USING expression**: Enter: `true`
+
+Or if using SQL in the SQL Editor (not in policies tab):
 ```sql
 CREATE POLICY "Public Access"
 ON storage.objects FOR SELECT
-USING ( bucket_id = 'product-media' );
+TO public
+USING ( true );
 ```
 
-Or use the Supabase UI:
-- **Policy name**: `Public Access`
-- **Allowed operation**: `SELECT`
+### Policy 2: Allow Public Uploads
+
+Click **"New Policy"** and select **"For full customization"**, then:
+- **Policy name**: `Allow uploads`
+- **Allowed operation**: `INSERT`
+- **Policy definition**: Select "Custom"
 - **Target roles**: `public`
-- **USING expression**: `bucket_id = 'product-media'`
+- **WITH CHECK expression**: Enter: `true`
 
-### Policy 2: Allow Authenticated Uploads
-
+Or if using SQL in the SQL Editor:
 ```sql
 CREATE POLICY "Allow uploads"
 ON storage.objects FOR INSERT
-WITH CHECK ( bucket_id = 'product-media' );
+TO public
+WITH CHECK ( true );
 ```
 
-Or use the Supabase UI:
-- **Policy name**: `Allow uploads`
-- **Allowed operation**: `INSERT`
-- **Target roles**: `public` (or `authenticated` if you add auth later)
-- **WITH CHECK expression**: `bucket_id = 'product-media'`
+### Policy 3: Allow Public Updates (Optional)
 
-### Policy 3: Allow Delete (Optional)
+Click **"New Policy"** and select **"For full customization"**, then:
+- **Policy name**: `Allow updates`
+- **Allowed operation**: `UPDATE`
+- **Policy definition**: Select "Custom"
+- **Target roles**: `public`
+- **WITH CHECK expression**: Enter: `true`
 
+Or if using SQL in the SQL Editor:
+```sql
+CREATE POLICY "Allow updates"
+ON storage.objects FOR UPDATE
+TO public
+WITH CHECK ( true );
+```
+
+### Policy 4: Allow Public Delete (Optional)
+
+Click **"New Policy"** and select **"For full customization"**, then:
+- **Policy name**: `Allow delete`
+- **Allowed operation**: `DELETE`
+- **Policy definition**: Select "Custom"
+- **Target roles**: `public`
+- **USING expression**: Enter: `true`
+
+Or if using SQL in the SQL Editor:
 ```sql
 CREATE POLICY "Allow delete"
 ON storage.objects FOR DELETE
-USING ( bucket_id = 'product-media' );
+TO public
+USING ( true );
 ```
 
-Or use the Supabase UI:
-- **Policy name**: `Allow delete`
-- **Allowed operation**: `DELETE`
-- **Target roles**: `public` (or `authenticated` if you add auth later)
-- **USING expression**: `bucket_id = 'product-media'`
+### Method 2: Quick Setup (Alternative)
+
+If the above seems complex, you can use the built-in policy templates:
+
+1. In the Policies tab, click **"New Policy"**
+2. Select **"Get started quickly"**
+3. Choose **"Allow public access"**
+4. This will create policies for SELECT, INSERT, UPDATE, DELETE automatically
+
+**Note**: For development, using `true` in policies is fine. For production, you'll want to restrict these policies to authenticated users and specific conditions.
 
 ## Step 3: Verify Setup
 
@@ -104,21 +157,48 @@ product-media/
 
 ## Troubleshooting
 
-### "StorageError: Bucket not found"
+### ❌ ERROR: "column bucket_id does not exist"
+This error occurs when trying to use SQL to create policies directly.
+
+**Solution**:
+1. **Use the Supabase UI instead** (Method 1 above) - this is the recommended approach
+2. Make sure you're creating policies in the **Policies tab** under Storage, not in the SQL Editor
+3. Use the policy expressions with `true` instead of `bucket_id = 'product-media'`
+4. OR use the "Get started quickly" → "Allow public access" template which handles this automatically
+
+### ❌ "StorageError: Bucket not found"
 - Make sure the bucket name is exactly `product-media`
 - Check that the bucket was created successfully in Supabase dashboard
+- Verify the bucket name in the MediaUploader component matches exactly
 
-### "StorageError: new row violates row-level security policy"
-- Make sure you've created the upload policy (Policy 2)
-- Check that the policy target role is set correctly
+### ❌ "StorageError: new row violates row-level security policy"
+- Make sure you've created the upload policy (Policy 2: Allow uploads)
+- Check that the policy target role is set to `public`
+- Verify the policy is **enabled** (toggle should be green)
+- Try using the "Allow public access" template instead
 
-### Uploaded files are not accessible
-- Make sure the bucket is set to **Public**
+### ❌ Uploaded files are not accessible
+- Make sure the bucket is set to **Public** (checkbox during creation)
 - Verify that the Public Access policy (Policy 1) is created and enabled
+- Check the file URL format: `https://[project-id].supabase.co/storage/v1/object/public/product-media/products/[filename]`
+- Test by opening the URL directly in a new browser tab
 
-### Cannot delete files
-- Create the delete policy (Policy 3)
+### ❌ Cannot delete files
+- Create the delete policy (Policy 4)
 - Make sure the policy is enabled
+- Check browser console for specific error messages
+
+### ❌ Upload succeeds but files don't show in admin panel
+- Check browser console for errors
+- Verify the `getPublicUrl` is returning a valid URL
+- Refresh the page to reload product data
+- Check that the images array is being saved to the database
+
+### ❌ "Failed to create policy" in Supabase UI
+- Try using the **"Get started quickly"** option instead of custom policies
+- Make sure you're in the correct bucket's Policies tab
+- Check that you don't already have a policy with the same name
+- Try creating policies one at a time
 
 ## Security Notes
 
