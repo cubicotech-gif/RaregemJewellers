@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { adminApi } from '@/lib/admin-api'
+import MediaUploader from './MediaUploader'
 import { X, Upload, Save } from 'lucide-react'
 import toast from 'react-hot-toast'
 
@@ -23,7 +24,8 @@ export default function AddProductModal({ isOpen, onClose, onSuccess }: AddProdu
     stock: '',
     featured: false,
     sku: '',
-    cost_price: ''
+    cost_price: '',
+    images: [] as string[]
   })
 
   if (!isOpen) return null
@@ -43,7 +45,7 @@ export default function AddProductModal({ isOpen, onClose, onSuccess }: AddProdu
         metal_type: formData.metal_type,
         stock: Number(formData.stock),
         featured: formData.featured,
-        images: []
+        images: formData.images
       }
 
       // Add optional admin fields only if they have values
@@ -71,7 +73,8 @@ export default function AddProductModal({ isOpen, onClose, onSuccess }: AddProdu
           stock: '',
           featured: false,
           sku: '',
-          cost_price: ''
+          cost_price: '',
+          images: []
         })
       } else {
         toast.error(result.error || 'Failed to create product')
@@ -98,7 +101,14 @@ export default function AddProductModal({ isOpen, onClose, onSuccess }: AddProdu
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+        <form onSubmit={handleSubmit} className="p-6 space-y-6">
+          {/* Media Upload */}
+          <MediaUploader
+            existingMedia={formData.images}
+            onMediaUpdate={(urls) => setFormData({ ...formData, images: urls })}
+          />
+
+          <div className="border-t border-neutral-200 pt-4 space-y-4">
           {/* Product Name */}
           <div>
             <label className="block text-sm font-medium text-neutral-700 mb-2">
@@ -250,9 +260,10 @@ export default function AddProductModal({ isOpen, onClose, onSuccess }: AddProdu
               Mark as Featured Product
             </label>
           </div>
+          </div>
 
           {/* Buttons */}
-          <div className="flex gap-3 pt-4">
+          <div className="flex gap-3 pt-4 border-t border-neutral-200">
             <button
               type="submit"
               disabled={loading}

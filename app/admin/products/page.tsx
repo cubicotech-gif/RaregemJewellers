@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { adminApi } from '@/lib/admin-api'
 import { AdminProduct } from '@/lib/admin-types'
 import AddProductModal from '@/components/admin/AddProductModal'
+import EditProductModal from '@/components/admin/EditProductModal'
 import {
   Package,
   Plus,
@@ -333,6 +334,14 @@ export default function ProductsPage() {
         isOpen={showAddModal}
         onClose={() => setShowAddModal(false)}
         onSuccess={loadProducts}
+      />
+
+      {/* Edit Product Modal */}
+      <EditProductModal
+        isOpen={!!editingProduct}
+        onClose={() => setEditingProduct(null)}
+        onSuccess={loadProducts}
+        product={editingProduct}
       />
     </div>
   )
