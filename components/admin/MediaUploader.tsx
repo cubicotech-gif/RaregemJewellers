@@ -23,6 +23,7 @@ export default function MediaUploader({ productId, existingMedia = [], onMediaUp
 
     try {
       const uploadedUrls: string[] = []
+      let errorDetails = ''
 
       for (let i = 0; i < files.length; i++) {
         const file = files[i]
@@ -30,35 +31,55 @@ export default function MediaUploader({ productId, existingMedia = [], onMediaUp
         const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`
         const filePath = `products/${fileName}`
 
+        console.log(`Uploading file: ${file.name}, size: ${file.size} bytes, path: ${filePath}`)
+
         // Upload to Supabase Storage
         const { data, error } = await supabase.storage
           .from('product-media')
-          .upload(filePath, file)
+          .upload(filePath, file, {
+            cacheControl: '3600',
+            upsert: false
+          })
 
         if (error) {
-          console.error('Upload error:', error)
-          toast.error(`Failed to upload ${file.name}`)
+          console.error('Upload error details:', {
+            message: error.message,
+            name: error.name,
+            stack: error.stack,
+            file: file.name
+          })
+          errorDetails = error.message
+          toast.error(`Failed: ${file.name} - ${error.message}`)
           continue
         }
+
+        console.log('Upload successful:', data)
 
         // Get public URL
         const { data: urlData } = supabase.storage
           .from('product-media')
           .getPublicUrl(filePath)
 
+        console.log('Public URL:', urlData?.publicUrl)
+
         if (urlData?.publicUrl) {
           uploadedUrls.push(urlData.publicUrl)
         }
       }
 
-      const newMediaFiles = [...mediaFiles, ...uploadedUrls]
-      setMediaFiles(newMediaFiles)
-      onMediaUpdate(newMediaFiles)
-      toast.success(`Uploaded ${uploadedUrls.length} file(s)`)
+      if (uploadedUrls.length > 0) {
+        const newMediaFiles = [...mediaFiles, ...uploadedUrls]
+        setMediaFiles(newMediaFiles)
+        onMediaUpdate(newMediaFiles)
+        toast.success(`Uploaded ${uploadedUrls.length} file(s)`)
+      } else if (errorDetails) {
+        toast.error(`Upload failed: ${errorDetails}`)
+      }
 
-    } catch (error) {
+    } catch (error: any) {
       console.error('Upload error:', error)
-      toast.error('Upload failed')
+      const errorMessage = error?.message || 'Unknown error'
+      toast.error(`Upload failed: ${errorMessage}`)
     } finally {
       setUploading(false)
     }
