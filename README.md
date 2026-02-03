@@ -9,6 +9,7 @@ A modern, full-stack e-commerce platform for selling rare gemstone jewelry. Buil
 
 ## ✨ Features
 
+### Customer-Facing Store
 - 🛍️ **Product Catalog** - Browse men's and women's jewelry collections
 - 🔍 **Advanced Filtering** - Filter by category, gemstone type, and price
 - 🛒 **Shopping Cart** - Persistent cart using Zustand with local storage
@@ -16,6 +17,18 @@ A modern, full-stack e-commerce platform for selling rare gemstone jewelry. Buil
 - 📱 **Responsive Design** - Mobile-first design with beautiful UI
 - ⚡ **Fast Performance** - Server-side rendering with Next.js 14 App Router
 - 🎨 **Modern UI** - Gradient accents, smooth animations, elegant typography
+
+### 🎯 Admin Panel (New!)
+- 📊 **Real-time Dashboard** - Live analytics with auto-refresh
+- 📦 **Product Management** - Inline editing, bulk actions, stock tracking
+- 🛒 **Order Management** - Status updates, payment tracking, order notes
+- 📈 **Analytics** - Revenue trends, sales performance, best sellers
+- 👥 **Customer Management** - Segmentation (VIP/Regular/New), lifetime value
+- 💰 **Financial Tracking** - Expense management, profit calculations
+- 📦 **Inventory Management** - Low stock alerts, stock history, auto-notifications
+- ⚙️ **Settings** - Store configuration, tax rates, thresholds
+
+**[View Admin Panel Documentation →](ADMIN_GUIDE.md)**
 
 ## 🚀 Tech Stack
 
@@ -87,6 +100,26 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) to see your website!
+
+## 🔐 Accessing the Admin Panel
+
+1. **Set up the database** - Run the SQL schema from `supabase-schema.sql` in your Supabase SQL Editor
+
+2. **Create an admin user**:
+   ```sql
+   INSERT INTO admin_users (email, password_hash, full_name, role) VALUES
+   ('admin@raregems.com', '$2b$10$YourHashHere', 'Admin User', 'super_admin');
+   ```
+
+3. **Access the admin panel**:
+   - Local: [http://localhost:3000/admin/login](http://localhost:3000/admin/login)
+   - Production: `https://your-domain.vercel.app/admin/login`
+
+4. **Default credentials** (for demo):
+   - Email: `admin@raregems.com`
+   - Password: `admin123`
+
+**📖 Full admin documentation:** See [ADMIN_GUIDE.md](ADMIN_GUIDE.md)
 
 ## 🌐 Deploying to Vercel
 
