@@ -16,7 +16,9 @@
     "lucide-react": "^0.316.0",
     "zustand": "^4.5.0",
     "date-fns": "^3.2.0",
-    "clsx": "^2.1.0"
+    "clsx": "^2.1.0",
+    "react-hot-toast": "^2.4.1",
+    "recharts": "^2.10.4"
   },
   "devDependencies": {
     "@types/node": "^20",
