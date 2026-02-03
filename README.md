@@ -9,6 +9,7 @@ A modern, full-stack e-commerce platform for selling rare gemstone jewelry. Buil
 
 ## ✨ Features
 
+### Customer-Facing Store
 - 🛍️ **Product Catalog** - Browse men's and women's jewelry collections
 - 🔍 **Advanced Filtering** - Filter by category, gemstone type, and price
 - 🛒 **Shopping Cart** - Persistent cart using Zustand with local storage
@@ -16,6 +17,18 @@ A modern, full-stack e-commerce platform for selling rare gemstone jewelry. Buil
 - 📱 **Responsive Design** - Mobile-first design with beautiful UI
 - ⚡ **Fast Performance** - Server-side rendering with Next.js 14 App Router
 - 🎨 **Modern UI** - Gradient accents, smooth animations, elegant typography
+
+### 🎯 Admin Panel (New!)
+- 📊 **Real-time Dashboard** - Live analytics with auto-refresh
+- 📦 **Product Management** - Inline editing, bulk actions, stock tracking
+- 🛒 **Order Management** - Status updates, payment tracking, order notes
+- 📈 **Analytics** - Revenue trends, sales performance, best sellers
+- 👥 **Customer Management** - Segmentation (VIP/Regular/New), lifetime value
+- 💰 **Financial Tracking** - Expense management, profit calculations
+- 📦 **Inventory Management** - Low stock alerts, stock history, auto-notifications
+- ⚙️ **Settings** - Store configuration, tax rates, thresholds
+
+**[View Admin Panel Documentation →](ADMIN_GUIDE.md)**
 
 ## 🚀 Tech Stack
 
@@ -87,6 +100,20 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) to see your website!
+
+## 🔓 Accessing the Admin Panel (Open Access)
+
+The admin panel is currently accessible without authentication for ease of development.
+
+1. **Set up the database** - Run the SQL schema from `supabase-schema.sql` in your Supabase SQL Editor
+
+2. **Access the admin panel**:
+   - Local: [http://localhost:3000/admin](http://localhost:3000/admin)
+   - Production: `https://your-domain.vercel.app/admin`
+
+**Note:** User authentication will be added later. For now, focus on building the website features!
+
+**📖 Full admin documentation:** See [ADMIN_GUIDE.md](ADMIN_GUIDE.md)
 
 ## 🌐 Deploying to Vercel
 
