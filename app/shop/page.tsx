@@ -1,88 +1,161 @@
+'use client'
+
+import { useState, useEffect } from 'react'
 import { supabase } from '@/lib/supabase'
-import ProductCard from '@/components/ProductCard'
-import ShopFilters from '@/components/ShopFilters'
+import { ShopHeader } from '@/components/shop/ShopHeader'
+import { FilterSidebar, Filters } from '@/components/shop/FilterSidebar'
+import { ProductGrid, Product } from '@/components/shop/ProductGrid'
+import { ShopBreadcrumb } from '@/components/shop/ShopBreadcrumb'
 
-interface SearchParams {
-  category?: string
-  gem?: string
-  sort?: string
-}
+export default function ShopPage() {
+  const [products, setProducts] = useState<Product[]>([])
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([])
+  const [loading, setLoading] = useState(true)
+  const [sortBy, setSortBy] = useState<string>('featured')
+  const [showFilters, setShowFilters] = useState(false)
 
-async function getProducts(searchParams: SearchParams) {
-  let query = supabase.from('products').select('*')
+  const [filters, setFilters] = useState<Filters>({
+    categories: [],
+    gemTypes: [],
+    metalTypes: [],
+    priceRange: [0, 50000],
+    inStock: false,
+    featured: false
+  })
 
-  // Apply category filter
-  if (searchParams.category) {
-    query = query.eq('category', searchParams.category)
-  }
+  // Fetch all products
+  useEffect(() => {
+    async function fetchProducts() {
+      setLoading(true)
+      const { data, error } = await supabase
+        .from('products')
+        .select('*')
+        .order('created_at', { ascending: false })
 
-  // Apply gem type filter
-  if (searchParams.gem) {
-    query = query.eq('gem_type', searchParams.gem)
-  }
+      if (data && !error) {
+        setProducts(data)
+        setFilteredProducts(data)
+      }
+      setLoading(false)
+    }
 
-  // Apply sorting
-  if (searchParams.sort === 'price-asc') {
-    query = query.order('price', { ascending: true })
-  } else if (searchParams.sort === 'price-desc') {
-    query = query.order('price', { ascending: false })
-  } else {
-    query = query.order('created_at', { ascending: false })
-  }
+    fetchProducts()
+  }, [])
 
-  const { data, error } = await query
+  // Apply filters and sorting
+  useEffect(() => {
+    let result = [...products]
 
-  if (error) {
-    console.error('Error fetching products:', error)
-    return []
-  }
+    // Category filter
+    if (filters.categories.length > 0) {
+      result = result.filter(p => filters.categories.includes(p.category))
+    }
 
-  return data || []
-}
+    // Gem type filter
+    if (filters.gemTypes.length > 0) {
+      result = result.filter(p => filters.gemTypes.includes(p.gem_type))
+    }
 
-export default async function ShopPage({
-  searchParams,
-}: {
-  searchParams: SearchParams
-}) {
-  const products = await getProducts(searchParams)
+    // Metal type filter
+    if (filters.metalTypes.length > 0) {
+      result = result.filter(p => filters.metalTypes.includes(p.metal_type))
+    }
+
+    // Price range filter
+    result = result.filter(p =>
+      p.price >= filters.priceRange[0] && p.price <= filters.priceRange[1]
+    )
+
+    // In stock filter
+    if (filters.inStock) {
+      result = result.filter(p => p.stock > 0)
+    }
+
+    // Featured filter
+    if (filters.featured) {
+      result = result.filter(p => p.featured)
+    }
+
+    // Sorting
+    switch (sortBy) {
+      case 'price-low':
+        result.sort((a, b) => a.price - b.price)
+        break
+      case 'price-high':
+        result.sort((a, b) => b.price - a.price)
+        break
+      case 'newest':
+        result.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+        break
+      case 'featured':
+        result.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0))
+        break
+    }
+
+    setFilteredProducts(result)
+  }, [filters, sortBy, products])
 
   return (
-    <div className="min-h-screen bg-neutral-50 py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Page Header */}
-        <div className="mb-8">
-          <h1 className="font-serif text-4xl font-bold mb-4 gradient-text">
-            {searchParams.category === 'womens' && "Women's Collection"}
-            {searchParams.category === 'mens' && "Men's Collection"}
-            {!searchParams.category && "All Products"}
-          </h1>
-          <p className="text-neutral-600">
-            Discover our exquisite collection of rare gemstone jewelry
-          </p>
+    <main className="min-h-screen bg-brand-black">
+      {/* Breadcrumb */}
+      <ShopBreadcrumb />
+
+      {/* Header */}
+      <ShopHeader
+        productCount={filteredProducts.length}
+        sortBy={sortBy}
+        setSortBy={setSortBy}
+        onToggleFilters={() => setShowFilters(!showFilters)}
+      />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="flex gap-8">
+          {/* Desktop Sidebar */}
+          <aside className="hidden lg:block w-64 flex-shrink-0">
+            <FilterSidebar
+              filters={filters}
+              setFilters={setFilters}
+              products={products}
+            />
+          </aside>
+
+          {/* Mobile Filter Drawer */}
+          {showFilters && (
+            <div className="fixed inset-0 z-50 lg:hidden">
+              <div
+                className="absolute inset-0 bg-black/80"
+                onClick={() => setShowFilters(false)}
+              />
+              <div className="absolute inset-y-0 left-0 w-80 bg-brand-charcoal p-6 overflow-y-auto">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-xl font-display font-bold text-brand-gold uppercase">
+                    Filters
+                  </h3>
+                  <button
+                    onClick={() => setShowFilters(false)}
+                    className="text-brand-cream hover:text-brand-gold"
+                  >
+                    ✕
+                  </button>
+                </div>
+                <FilterSidebar
+                  filters={filters}
+                  setFilters={setFilters}
+                  products={products}
+                />
+              </div>
+            </div>
+          )}
+
+          {/* Product Grid */}
+          <div className="flex-1">
+            <ProductGrid
+              products={filteredProducts}
+              loading={loading}
+            />
+          </div>
         </div>
-
-        {/* Filters */}
-        <ShopFilters />
-
-        {/* Products Grid */}
-        {products.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mt-8">
-            {products.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-16">
-            <p className="text-neutral-600 text-lg mb-4">
-              No products found matching your criteria.
-            </p>
-            <p className="text-neutral-500">
-              Try adjusting your filters or browse all products.
-            </p>
-          </div>
-        )}
       </div>
-    </div>
+    </main>
   )
 }
