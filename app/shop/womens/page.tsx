@@ -10,7 +10,7 @@ export default function WomensRingsPage() {
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
 
-  useEffect() => {
+  useEffect(() => {
     async function fetchWomensProducts() {
       setLoading(true)
       const { data, error } = await supabase
