@@ -25,16 +25,16 @@ export function TrustBadges() {
   ]
 
   return (
-    <section className="py-12 border-y border-brand-gold/10 bg-brand-charcoal/50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-12 border-y border-light-gray bg-luxury-white">
+      <div className="max-w-7xl mx-auto px-8">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           {badges.map((badge, index) => (
             <div key={index} className="flex flex-col items-center text-center">
-              <badge.icon className="w-8 h-8 text-brand-gold mb-3" />
-              <h4 className="text-sm font-semibold text-brand-cream uppercase tracking-wider mb-1">
+              <badge.icon className="w-8 h-8 text-champagne mb-3" />
+              <h4 className="font-body text-sm font-semibold text-luxury-black uppercase tracking-wider mb-1">
                 {badge.title}
               </h4>
-              <p className="text-xs text-brand-gray">
+              <p className="font-body text-xs text-warm-gray">
                 {badge.description}
               </p>
             </div>

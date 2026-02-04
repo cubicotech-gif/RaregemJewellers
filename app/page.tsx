@@ -8,7 +8,7 @@ import { TrustBadges } from '@/components/homepage/TrustBadges'
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-brand-black">
+    <main className="min-h-screen bg-luxury-white">
       <HeroSection />
       <TrustBadges />
       <FeaturedProducts />
