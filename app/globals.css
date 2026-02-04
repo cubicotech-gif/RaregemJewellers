@@ -2,34 +2,78 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
-
 @layer base {
-  body {
-    @apply bg-neutral-50 text-neutral-900;
+  :root {
+    --background: 26 26 26; /* #1a1a1a */
+    --foreground: 232 232 232; /* #E8E8E8 */
+
+    --card: 45 45 45; /* #2d2d2d */
+    --card-foreground: 232 232 232;
+
+    --popover: 26 26 26;
+    --popover-foreground: 232 232 232;
+
+    --primary: 212 175 55; /* Gold */
+    --primary-foreground: 26 26 26;
+
+    --secondary: 45 45 45;
+    --secondary-foreground: 232 232 232;
+
+    --muted: 45 45 45;
+    --muted-foreground: 136 136 136;
+
+    --accent: 212 175 55;
+    --accent-foreground: 26 26 26;
+
+    --destructive: 139 0 0;
+    --destructive-foreground: 232 232 232;
+
+    --border: 45 45 45;
+    --input: 45 45 45;
+    --ring: 212 175 55;
+
+    --radius: 0.5rem;
   }
 }
 
-@layer components {
-  .btn-primary {
-    @apply bg-gradient-to-r from-purple-600 to-gold-500 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 hover:scale-105;
+@layer base {
+  * {
+    @apply border-border;
   }
-  
-  .btn-secondary {
-    @apply border-2 border-neutral-800 text-neutral-800 px-6 py-3 rounded-lg font-semibold hover:bg-neutral-800 hover:text-white transition-all duration-300;
+  body {
+    @apply bg-brand-black text-brand-cream font-sans;
+    font-feature-settings: "rlig" 1, "calt" 1;
   }
-  
-  .card-hover {
-    @apply transition-all duration-300 hover:shadow-2xl hover:-translate-y-2;
-  }
-  
-  .gradient-text {
-    @apply bg-gradient-to-r from-purple-600 to-gold-500 bg-clip-text text-transparent;
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
   }
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  /* Text Shadows for Luxury Feel */
+  .text-shadow-gold {
+    text-shadow: 0 2px 10px rgba(212, 175, 55, 0.5);
+  }
+
+  .text-shadow-dark {
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+  }
+
+  /* Smooth Transitions */
+  .transition-luxury {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Glass Effect */
+  .glass-effect {
+    background: rgba(45, 45, 45, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(212, 175, 55, 0.1);
+  }
+
+  /* Gradient Text */
+  .gradient-gold-text {
+    @apply bg-gradient-gold bg-clip-text text-transparent;
   }
 }
