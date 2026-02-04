@@ -10,39 +10,51 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Brand Colors
-        'brand-black': '#1a1a1a',      // Primary dark
-        'brand-gold': '#D4AF37',        // Primary accent
-        'brand-burgundy': '#8B0000',    // Secondary accent
-        'brand-cream': '#F5F5DC',       // Neutral light
-        'brand-charcoal': '#2d2d2d',   // Card backgrounds
-        'brand-gray': '#888888',        // Muted text
+        // LIGHT BACKGROUNDS (Use 90% of website)
+        'luxury-white': '#FFFFFF',
+        'luxury-cream': '#FBF9F6',
+        'luxury-beige': '#F5F1EB',
 
-        // UI Colors
+        // PROPER GOLD COLORS (Not bright yellow!)
+        'champagne': '#C9A868',
+        'rose-gold': '#B76E79',
+        'antique-gold': '#AA8453',
+        'pale-gold': '#E8D7B5',
+
+        // DARK COLORS (Use sparingly - 10% max)
+        'luxury-black': '#1C1B1A',
+        'charcoal': '#2F2F2F',
+
+        // NEUTRAL GRAYS
+        'warm-gray': '#8B8680',
+        'light-gray': '#D4D0CC',
+        'border-light': '#E8E4DF',
+
+        // UI Colors (for compatibility)
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: '#D4AF37',
-          foreground: '#1a1a1a',
+          DEFAULT: '#C9A868',
+          foreground: '#FFFFFF',
         },
         secondary: {
-          DEFAULT: '#2d2d2d',
-          foreground: '#E8E8E8',
+          DEFAULT: '#F5F1EB',
+          foreground: '#1C1B1A',
         },
         destructive: {
-          DEFAULT: '#8B0000',
-          foreground: '#E8E8E8',
+          DEFAULT: '#DC2626',
+          foreground: '#FFFFFF',
         },
         muted: {
-          DEFAULT: '#2d2d2d',
-          foreground: '#888888',
+          DEFAULT: '#F5F1EB',
+          foreground: '#8B8680',
         },
         accent: {
-          DEFAULT: '#D4AF37',
-          foreground: '#1a1a1a',
+          DEFAULT: '#C9A868',
+          foreground: '#1C1B1A',
         },
         card: {
           DEFAULT: "hsl(var(--card))",
@@ -54,25 +66,41 @@ module.exports = {
         },
       },
       fontFamily: {
-        'display': ['var(--font-playfair)', 'Playfair Display', 'serif'],
-        'sans': ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
+        'heading': ['var(--font-cormorant)', 'Cormorant Garamond', 'serif'],
+        'body': ['var(--font-montserrat)', 'Montserrat', 'sans-serif'],
+        'display': ['var(--font-cormorant)', 'Cormorant Garamond', 'serif'],
+        'sans': ['var(--font-montserrat)', 'Montserrat', 'sans-serif'],
       },
       fontSize: {
-        'hero': ['4.5rem', { lineHeight: '1.1', letterSpacing: '-0.02em' }],
-        'display': ['3.5rem', { lineHeight: '1.2', letterSpacing: '-0.01em' }],
+        'hero': ['5rem', { lineHeight: '1.1', letterSpacing: '-0.02em' }],
+        'display': ['3.5rem', { lineHeight: '1.2' }],
+        'section': ['2.5rem', { lineHeight: '1.3' }],
+      },
+      spacing: {
+        '18': '4.5rem',
+        '22': '5.5rem',
+        '26': '6.5rem',
+        '30': '7.5rem',
+        '34': '8.5rem',
+      },
+      maxWidth: {
+        '8xl': '1400px',
       },
       backgroundImage: {
-        'gradient-gold': 'linear-gradient(135deg, #D4AF37 0%, #F4E4B0 100%)',
-        'gradient-dark': 'linear-gradient(180deg, #1a1a1a 0%, #2d2d2d 100%)',
+        'gradient-gold': 'linear-gradient(135deg, #C9A868 0%, #E8D7B5 100%)',
+        'gradient-dark': 'linear-gradient(180deg, #1C1B1A 0%, #2F2F2F 100%)',
       },
       boxShadow: {
-        'gold': '0 0 30px rgba(212, 175, 55, 0.3)',
-        'luxury': '0 20px 60px rgba(0, 0, 0, 0.8)',
+        'elegant': '0 4px 20px rgba(28, 27, 26, 0.06)',
+        'elegant-hover': '0 8px 30px rgba(201, 168, 104, 0.15)',
+        'card': '0 2px 10px rgba(28, 27, 26, 0.04)',
+        'card-hover': '0 4px 20px rgba(28, 27, 26, 0.08)',
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        sm: "2px",
+        none: "0px",
       },
     },
   },

@@ -4,76 +4,90 @@
 
 @layer base {
   :root {
-    --background: 26 26 26; /* #1a1a1a */
-    --foreground: 232 232 232; /* #E8E8E8 */
+    /* Light theme with white/cream backgrounds */
+    --background: 255 255 255; /* #FFFFFF */
+    --foreground: 28 27 26; /* #1C1B1A - luxury black */
 
-    --card: 45 45 45; /* #2d2d2d */
-    --card-foreground: 232 232 232;
+    --card: 255 255 255; /* White cards */
+    --card-foreground: 28 27 26;
 
-    --popover: 26 26 26;
-    --popover-foreground: 232 232 232;
+    --popover: 255 255 255;
+    --popover-foreground: 28 27 26;
 
-    --primary: 212 175 55; /* Gold */
-    --primary-foreground: 26 26 26;
+    --primary: 201 168 104; /* Champagne #C9A868 */
+    --primary-foreground: 255 255 255;
 
-    --secondary: 45 45 45;
-    --secondary-foreground: 232 232 232;
+    --secondary: 245 241 235; /* Luxury beige #F5F1EB */
+    --secondary-foreground: 28 27 26;
 
-    --muted: 45 45 45;
-    --muted-foreground: 136 136 136;
+    --muted: 245 241 235;
+    --muted-foreground: 139 134 128; /* Warm gray */
 
-    --accent: 212 175 55;
-    --accent-foreground: 26 26 26;
+    --accent: 201 168 104; /* Champagne */
+    --accent-foreground: 28 27 26;
 
-    --destructive: 139 0 0;
-    --destructive-foreground: 232 232 232;
+    --destructive: 220 38 38;
+    --destructive-foreground: 255 255 255;
 
-    --border: 45 45 45;
-    --input: 45 45 45;
-    --ring: 212 175 55;
+    --border: 232 228 223; /* Border light #E8E4DF */
+    --input: 212 208 204; /* Light gray #D4D0CC */
+    --ring: 201 168 104; /* Champagne */
 
-    --radius: 0.5rem;
+    --radius: 0rem; /* Sharp corners for luxury */
   }
 }
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border-light;
   }
   body {
-    @apply bg-brand-black text-brand-cream font-sans;
+    @apply bg-luxury-white text-luxury-black font-body;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-display;
+    @apply font-heading;
   }
 }
 
 @layer utilities {
-  /* Text Shadows for Luxury Feel */
-  .text-shadow-gold {
-    text-shadow: 0 2px 10px rgba(212, 175, 55, 0.5);
+  /* Elegant Transitions */
+  .transition-elegant {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  .text-shadow-dark {
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+  /* Hover Effects */
+  .hover-lift {
+    transition: transform 0.3s ease;
   }
 
-  /* Smooth Transitions */
-  .transition-luxury {
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  .hover-lift:hover {
+    transform: translateY(-4px);
   }
 
-  /* Glass Effect */
-  .glass-effect {
-    background: rgba(45, 45, 45, 0.8);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(212, 175, 55, 0.1);
+  /* Image Zoom on Hover */
+  .hover-zoom {
+    overflow: hidden;
   }
 
-  /* Gradient Text */
-  .gradient-gold-text {
+  .hover-zoom img {
+    transition: transform 0.5s ease;
+  }
+
+  .hover-zoom:hover img {
+    transform: scale(1.05);
+  }
+
+  /* Gradient Text for Champagne */
+  .gradient-champagne-text {
     @apply bg-gradient-gold bg-clip-text text-transparent;
+  }
+
+  /* Glass Effect for Light Theme */
+  .glass-light {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(201, 168, 104, 0.2);
   }
 }

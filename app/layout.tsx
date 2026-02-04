@@ -1,18 +1,19 @@
 import type { Metadata } from 'next'
-import { Inter, Playfair_Display } from 'next/font/google'
+import { Cormorant_Garamond, Montserrat } from 'next/font/google'
 import './globals.css'
 import ConditionalLayout from '@/components/ConditionalLayout'
 
-const inter = Inter({
+const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
-  variable: '--font-inter',
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-cormorant',
   display: 'swap',
 })
 
-const playfair = Playfair_Display({
+const montserrat = Montserrat({
   subsets: ['latin'],
-  variable: '--font-playfair',
-  weight: ['400', '500', '600', '700', '800', '900'],
+  weight: ['300', '400', '500', '600', '700'],
+  variable: '--font-montserrat',
   display: 'swap',
 })
 
@@ -28,8 +29,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
-      <body className="font-sans antialiased">
+    <html lang="en" className={`${montserrat.variable} ${cormorant.variable}`}>
+      <body className="font-body antialiased bg-luxury-white text-luxury-black">
         <ConditionalLayout>
           {children}
         </ConditionalLayout>
