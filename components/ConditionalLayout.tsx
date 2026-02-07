@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation'
 import Navbar from './Navbar'
 import Footer from './Footer'
 import { CustomCursor } from './CustomCursor'
+import { ScrollProgress } from './ScrollProgress'
 
 export default function ConditionalLayout({
   children,
@@ -23,6 +24,7 @@ export default function ConditionalLayout({
   if (isHomePage) {
     return (
       <>
+        <ScrollProgress />
         <CustomCursor />
         <Navbar />
         {children}
@@ -31,12 +33,14 @@ export default function ConditionalLayout({
     )
   }
 
-  // Regular routes get navbar and footer
+  // Regular routes get navbar and footer with proper header spacing
+  // Header total = 32px top bar + 96px main = 128px
   return (
     <>
+      <ScrollProgress />
       <CustomCursor />
       <Navbar />
-      <main className="min-h-screen pt-40">
+      <main className="min-h-screen" style={{ paddingTop: '128px' }}>
         {children}
       </main>
       <Footer />
