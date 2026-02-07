@@ -1,21 +1,21 @@
 import { HeroSection } from '@/components/homepage/HeroSection'
-import { FeaturedProducts } from '@/components/homepage/FeaturedProducts'
-import { StorySection } from '@/components/homepage/StorySection'
-import { GemstoneShowcase } from '@/components/homepage/GemstoneShowcase'
-import { TestimonialsSection } from '@/components/homepage/TestimonialsSection'
-import { CTASection } from '@/components/homepage/CTASection'
-import { TrustBadges } from '@/components/homepage/TrustBadges'
+import { ManifestoSection } from '@/components/homepage/ManifestoSection'
+import { VaultSection } from '@/components/homepage/VaultSection'
+import { CraftSection } from '@/components/homepage/CraftSection'
+import { SocialProofSection } from '@/components/homepage/SocialProofSection'
+import { GuaranteeSection } from '@/components/homepage/GuaranteeSection'
+import { FinalCTASection } from '@/components/homepage/FinalCTASection'
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-brand-black">
+    <main className="bg-void-black">
       <HeroSection />
-      <TrustBadges />
-      <FeaturedProducts />
-      <StorySection />
-      <GemstoneShowcase />
-      <TestimonialsSection />
-      <CTASection />
+      <ManifestoSection />
+      <VaultSection />
+      <CraftSection />
+      <SocialProofSection />
+      <GuaranteeSection />
+      <FinalCTASection />
     </main>
   )
 }
