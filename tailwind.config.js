@@ -13,17 +13,17 @@ module.exports = {
       colors: {
         // Brand Colors
         'brand-black': '#1a1a1a',
-        'brand-gold': '#D4AF37',
+        'brand-gold': '#B76E79',
         'brand-burgundy': '#8B0000',
         'brand-cream': '#F5F5DC',
         'brand-charcoal': '#2d2d2d',
         'brand-gray': '#888888',
 
-        // Luxury Palette
+        // Luxury Palette — Rose Gold & Blush
         'obsidian': '#0a0a0a',
         'steel': '#1c1c1e',
-        'gold-royal': '#D4AF37',
-        'gold-light': '#F4E4B0',
+        'gold-royal': '#B76E79',
+        'gold-light': '#E8B4B8',
         'blood-red': '#8B0000',
         'ivory': '#F5F5DC',
 
@@ -34,7 +34,7 @@ module.exports = {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: '#D4AF37',
+          DEFAULT: '#B76E79',
           foreground: '#1a1a1a',
         },
         secondary: {
@@ -50,7 +50,7 @@ module.exports = {
           foreground: '#888888',
         },
         accent: {
-          DEFAULT: '#D4AF37',
+          DEFAULT: '#B76E79',
           foreground: '#1a1a1a',
         },
         card: {
@@ -73,16 +73,16 @@ module.exports = {
         'display': ['3.5rem', { lineHeight: '1.2', letterSpacing: '-0.01em' }],
       },
       backgroundImage: {
-        'gradient-gold': 'linear-gradient(135deg, #D4AF37 0%, #F4E4B0 100%)',
+        'gradient-gold': 'linear-gradient(135deg, #B76E79 0%, #E8B4B8 100%)',
         'gradient-dark': 'linear-gradient(180deg, #1a1a1a 0%, #2d2d2d 100%)',
         'gradient-obsidian': 'linear-gradient(180deg, #0a0a0a 0%, #1c1c1e 50%, #0a0a0a 100%)',
       },
       boxShadow: {
-        'gold': '0 0 30px rgba(212, 175, 55, 0.3)',
-        'gold-sm': '0 0 15px rgba(212, 175, 55, 0.2)',
-        'gold-lg': '0 0 60px rgba(212, 175, 55, 0.4)',
+        'gold': '0 0 30px rgba(183, 110, 121, 0.3)',
+        'gold-sm': '0 0 15px rgba(183, 110, 121, 0.2)',
+        'gold-lg': '0 0 60px rgba(183, 110, 121, 0.4)',
         'luxury': '0 20px 60px rgba(0, 0, 0, 0.8)',
-        'luxury-hover': '0 30px 80px rgba(0, 0, 0, 0.9), 0 0 40px rgba(212, 175, 55, 0.15)',
+        'luxury-hover': '0 30px 80px rgba(0, 0, 0, 0.9), 0 0 40px rgba(183, 110, 121, 0.15)',
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -114,8 +114,8 @@ module.exports = {
           '100%': { opacity: '1', transform: 'translateX(0)' },
         },
         pulseGold: {
-          '0%, 100%': { boxShadow: '0 0 15px rgba(212, 175, 55, 0.3)' },
-          '50%': { boxShadow: '0 0 30px rgba(212, 175, 55, 0.5)' },
+          '0%, 100%': { boxShadow: '0 0 15px rgba(183, 110, 121, 0.3)' },
+          '50%': { boxShadow: '0 0 30px rgba(183, 110, 121, 0.5)' },
         },
       },
     },

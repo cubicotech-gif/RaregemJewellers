@@ -20,20 +20,20 @@ export function MarqueeBanner() {
         <div className="flex shrink-0 animate-[scroll_30s_linear_infinite] gap-0">
           {[...items, ...items].map((item, i) => (
             <span key={i} className="flex items-center gap-6 px-6">
-              <span className="text-[11px] font-bold tracking-[3px] uppercase text-black whitespace-nowrap">
+              <span className="text-[11px] font-bold tracking-[3px] uppercase text-white whitespace-nowrap">
                 {item}
               </span>
-              <span className="text-black/30 text-lg select-none">&mdash;</span>
+              <span className="text-white/30 text-lg select-none">&mdash;</span>
             </span>
           ))}
         </div>
         <div className="flex shrink-0 animate-[scroll_30s_linear_infinite] gap-0" aria-hidden="true">
           {[...items, ...items].map((item, i) => (
             <span key={i} className="flex items-center gap-6 px-6">
-              <span className="text-[11px] font-bold tracking-[3px] uppercase text-black whitespace-nowrap">
+              <span className="text-[11px] font-bold tracking-[3px] uppercase text-white whitespace-nowrap">
                 {item}
               </span>
-              <span className="text-black/30 text-lg select-none">&mdash;</span>
+              <span className="text-white/30 text-lg select-none">&mdash;</span>
             </span>
           ))}
         </div>

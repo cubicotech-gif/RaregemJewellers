@@ -13,7 +13,7 @@
     --popover: 26 26 26;
     --popover-foreground: 232 232 232;
 
-    --primary: 212 175 55; /* Gold */
+    --primary: 183 110 121; /* Rose Gold */
     --primary-foreground: 26 26 26;
 
     --secondary: 45 45 45;
@@ -22,7 +22,7 @@
     --muted: 45 45 45;
     --muted-foreground: 136 136 136;
 
-    --accent: 212 175 55;
+    --accent: 183 110 121;
     --accent-foreground: 26 26 26;
 
     --destructive: 139 0 0;
@@ -30,7 +30,7 @@
 
     --border: 45 45 45;
     --input: 45 45 45;
-    --ring: 212 175 55;
+    --ring: 183 110 121;
 
     --radius: 0.5rem;
   }
@@ -61,14 +61,14 @@
     border-radius: 4px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #D4AF37;
+    background: #B76E79;
   }
 }
 
 @layer utilities {
   /* Text Shadows for Luxury Feel */
   .text-shadow-gold {
-    text-shadow: 0 2px 10px rgba(212, 175, 55, 0.5);
+    text-shadow: 0 2px 10px rgba(183, 110, 121, 0.5);
   }
 
   .text-shadow-dark {
@@ -84,7 +84,7 @@
   .glass-effect {
     background: rgba(45, 45, 45, 0.8);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(212, 175, 55, 0.1);
+    border: 1px solid rgba(183, 110, 121, 0.1);
   }
 
   /* Gradient Text */

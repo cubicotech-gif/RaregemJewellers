@@ -28,13 +28,13 @@ export function NewsletterSection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left - Copy */}
           <div>
-            <span className="text-[11px] font-bold tracking-[4px] uppercase text-black/50 mb-4 block">
+            <span className="text-[11px] font-bold tracking-[4px] uppercase text-white/60 mb-4 block">
               The Inner Circle
             </span>
-            <h3 className="text-3xl lg:text-4xl font-playfair font-bold text-black mb-4">
+            <h3 className="text-3xl lg:text-4xl font-playfair font-bold text-white mb-4">
               First Access To New Arrivals
             </h3>
-            <p className="text-black/60 font-cormorant italic text-lg">
+            <p className="text-white/70 font-cormorant italic text-lg">
               Join our private list for early access to new rare gems,
               exclusive pricing, and collector insights.
             </p>
@@ -44,14 +44,14 @@ export function NewsletterSection() {
           <div>
             {submitted ? (
               <div className="flex items-center gap-4 py-6">
-                <div className="w-12 h-12 bg-black flex items-center justify-center">
-                  <Check className="w-5 h-5 text-gold-royal" />
+                <div className="w-12 h-12 bg-white/20 flex items-center justify-center">
+                  <Check className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <p className="text-sm font-bold text-black tracking-wide">
+                  <p className="text-sm font-bold text-white tracking-wide">
                     Welcome to the Inner Circle
                   </p>
-                  <p className="text-sm text-black/60">
+                  <p className="text-sm text-white/70">
                     You&apos;ll hear from us when something rare arrives.
                   </p>
                 </div>
@@ -64,23 +64,23 @@ export function NewsletterSection() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
                   required
-                  className="flex-1 px-6 py-4 bg-black/10 border border-black/20
-                           placeholder:text-black/40 text-black text-sm tracking-wider
-                           focus:outline-none focus:border-black/50 transition-colors"
+                  className="flex-1 px-6 py-4 bg-white/10 border border-white/20
+                           placeholder:text-white/40 text-white text-sm tracking-wider
+                           focus:outline-none focus:border-white/50 transition-colors"
                 />
                 <button
                   type="submit"
                   className="group px-8 py-4 bg-black hover:bg-black/90
                            transition-colors duration-300 flex items-center justify-center gap-3"
                 >
-                  <span className="text-[11px] font-bold tracking-[3px] uppercase text-gold-royal">
+                  <span className="text-[11px] font-bold tracking-[3px] uppercase text-gold-light">
                     Subscribe
                   </span>
-                  <ArrowRight className="w-4 h-4 text-gold-royal group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="w-4 h-4 text-gold-light group-hover:translate-x-1 transition-transform" />
                 </button>
               </form>
             )}
-            <p className="text-[11px] text-black/40 mt-4 tracking-wider">
+            <p className="text-[11px] text-white/40 mt-4 tracking-wider">
               No spam. Only rare finds. Unsubscribe anytime.
             </p>
           </div>
