@@ -6,17 +6,26 @@ module.exports = {
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
+    './data/**/*.{ts,tsx}',
   ],
   theme: {
     extend: {
       colors: {
         // Brand Colors
-        'brand-black': '#1a1a1a',      // Primary dark
-        'brand-gold': '#D4AF37',        // Primary accent
-        'brand-burgundy': '#8B0000',    // Secondary accent
-        'brand-cream': '#F5F5DC',       // Neutral light
-        'brand-charcoal': '#2d2d2d',   // Card backgrounds
-        'brand-gray': '#888888',        // Muted text
+        'brand-black': '#1a1a1a',
+        'brand-gold': '#D4AF37',
+        'brand-burgundy': '#8B0000',
+        'brand-cream': '#F5F5DC',
+        'brand-charcoal': '#2d2d2d',
+        'brand-gray': '#888888',
+
+        // Luxury Palette
+        'obsidian': '#0a0a0a',
+        'steel': '#1c1c1e',
+        'gold-royal': '#D4AF37',
+        'gold-light': '#F4E4B0',
+        'blood-red': '#8B0000',
+        'ivory': '#F5F5DC',
 
         // UI Colors
         border: "hsl(var(--border))",
@@ -55,7 +64,9 @@ module.exports = {
       },
       fontFamily: {
         'display': ['var(--font-playfair)', 'Playfair Display', 'serif'],
+        'playfair': ['var(--font-playfair)', 'Playfair Display', 'serif'],
         'sans': ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
+        'cormorant': ['var(--font-cormorant)', 'Cormorant Garamond', 'serif'],
       },
       fontSize: {
         'hero': ['4.5rem', { lineHeight: '1.1', letterSpacing: '-0.02em' }],
@@ -64,15 +75,48 @@ module.exports = {
       backgroundImage: {
         'gradient-gold': 'linear-gradient(135deg, #D4AF37 0%, #F4E4B0 100%)',
         'gradient-dark': 'linear-gradient(180deg, #1a1a1a 0%, #2d2d2d 100%)',
+        'gradient-obsidian': 'linear-gradient(180deg, #0a0a0a 0%, #1c1c1e 50%, #0a0a0a 100%)',
       },
       boxShadow: {
         'gold': '0 0 30px rgba(212, 175, 55, 0.3)',
+        'gold-sm': '0 0 15px rgba(212, 175, 55, 0.2)',
+        'gold-lg': '0 0 60px rgba(212, 175, 55, 0.4)',
         'luxury': '0 20px 60px rgba(0, 0, 0, 0.8)',
+        'luxury-hover': '0 30px 80px rgba(0, 0, 0, 0.9), 0 0 40px rgba(212, 175, 55, 0.15)',
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      animation: {
+        'shimmer': 'shimmer 2s linear infinite',
+        'fade-in': 'fadeIn 0.6s ease-out',
+        'fade-up': 'fadeUp 0.6s ease-out',
+        'slide-in': 'slideIn 0.5s ease-out',
+        'pulse-gold': 'pulseGold 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+      },
+      keyframes: {
+        shimmer: {
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(100%)' },
+        },
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        fadeUp: {
+          '0%': { opacity: '0', transform: 'translateY(20px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        slideIn: {
+          '0%': { opacity: '0', transform: 'translateX(-10px)' },
+          '100%': { opacity: '1', transform: 'translateX(0)' },
+        },
+        pulseGold: {
+          '0%, 100%': { boxShadow: '0 0 15px rgba(212, 175, 55, 0.3)' },
+          '50%': { boxShadow: '0 0 30px rgba(212, 175, 55, 0.5)' },
+        },
       },
     },
   },

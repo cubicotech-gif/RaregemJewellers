@@ -39,11 +39,11 @@ export function FilterSidebar({ filters, setFilters, products }: FilterSidebarPr
 
   useEffect(() => {
     // Get unique gem types
-    const gems = [...new Set(products.map(p => p.gem_type))].filter(Boolean)
+    const gems = Array.from(new Set(products.map(p => p.gem_type))).filter(Boolean)
     setUniqueGems(gems.sort())
 
     // Get unique metal types
-    const metals = [...new Set(products.map(p => p.metal_type))].filter(Boolean)
+    const metals = Array.from(new Set(products.map(p => p.metal_type))).filter(Boolean)
     setUniqueMetals(metals.sort())
 
     // Get max price
