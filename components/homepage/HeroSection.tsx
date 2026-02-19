@@ -1,97 +1,121 @@
 'use client'
 
-import { Button } from '@/components/ui/button-luxury'
-import { ArrowRight, Sparkles } from 'lucide-react'
-import Image from 'next/image'
+import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
+
+const HERO_WORDS = ['Legacy', 'Power', 'Rarity', 'Forever']
 
 export function HeroSection() {
+  const [currentWord, setCurrentWord] = useState(0)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentWord((prev) => (prev + 1) % HERO_WORDS.length)
+    }, 3000)
+    return () => clearInterval(interval)
+  }, [])
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Image with Overlay */}
-      <div className="absolute inset-0 z-0">
-        <Image
-          src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=1920&q=80"
-          alt="Luxury men's engagement ring"
-          fill
-          className="object-cover opacity-40"
-          priority
-          quality={90}
-        />
-        {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-brand-black/80 via-brand-black/60 to-brand-black"></div>
+    <section className="relative min-h-screen flex items-end pb-20 lg:pb-32 overflow-hidden bg-black">
+      {/* Ambient Background Glow */}
+      <div className="absolute inset-0">
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2
+                      w-[800px] h-[800px] bg-gold-royal/[0.03] rounded-full blur-[200px]" />
+        <div className="absolute bottom-0 left-0 right-0 h-1/2
+                      bg-gradient-to-t from-black via-black/80 to-transparent" />
       </div>
 
+      {/* Decorative Side Lines */}
+      <div className="hidden lg:block absolute left-12 top-1/4 bottom-1/4 w-px bg-gradient-to-b from-transparent via-gold-royal/20 to-transparent" />
+      <div className="hidden lg:block absolute right-12 top-1/4 bottom-1/4 w-px bg-gradient-to-b from-transparent via-gold-royal/20 to-transparent" />
+
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        {/* Floating Badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-effect mb-8 animate-fade-in">
-          <Sparkles className="w-4 h-4 text-brand-gold" />
-          <span className="text-sm text-brand-gold uppercase tracking-wider font-semibold">
-            Rare Gems • Handcrafted • Lifetime Warranty
+      <div className="relative z-10 w-full max-w-[1600px] mx-auto px-6 lg:px-16">
+        {/* Top Eyebrow */}
+        <div className="flex items-center gap-6 mb-8">
+          <div className="w-20 h-px bg-gold-royal" />
+          <span className="text-[11px] font-medium tracking-[6px] uppercase text-gold-royal">
+            Rare Legacy Jewellers
           </span>
         </div>
 
-        {/* Main Headline */}
-        <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-brand-cream mb-6 text-shadow-gold uppercase tracking-tight">
-          Forge Your
-          <span className="block gradient-gold-text">Forever</span>
-        </h1>
-
-        {/* Subheadline */}
-        <p className="text-xl md:text-2xl text-brand-gray max-w-3xl mx-auto mb-12 leading-relaxed">
-          Your commitment deserves more than ordinary. Discover engagement rings
-          featuring rare gems as unique as your love story.
-        </p>
-
-        {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <Link href="/shop">
-            <Button variant="gold" size="xl" className="group">
-              Discover Your Ring
-              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-            </Button>
-          </Link>
-          <Link href="/custom">
-            <Button variant="outline" size="xl">
-              Custom Design
-            </Button>
-          </Link>
+        {/* Main Headline - Dramatic Large Typography inspired by Frank Jewelry */}
+        <div className="mb-12">
+          <h1 className="font-playfair text-[clamp(3rem,10vw,9rem)] font-bold text-white leading-[0.95] tracking-tight">
+            Jewellery
+            <br />
+            <span className="text-white/20">For The</span>
+            <br />
+            <span className="relative inline-block">
+              <span className="gradient-gold-text">{HERO_WORDS[currentWord]}</span>
+              <span className="absolute -bottom-2 left-0 w-full h-px bg-gold-royal/40" />
+            </span>
+          </h1>
         </div>
 
-        {/* Stats */}
-        <div className="grid grid-cols-3 gap-8 max-w-2xl mx-auto mt-20 pt-12 border-t border-brand-gold/20">
-          <div>
-            <div className="text-3xl md:text-4xl font-display font-bold text-brand-gold mb-2">
-              500+
-            </div>
-            <div className="text-sm text-brand-gray uppercase tracking-wider">
-              Rare Gems
+        {/* Bottom Row - Description + CTA */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
+          {/* Description */}
+          <div className="lg:col-span-5">
+            <p className="text-lg lg:text-xl text-white/50 leading-relaxed font-cormorant italic mb-8">
+              Investment-grade gemstone rings handcrafted for the modern man.
+              Kashmir sapphires, Burmese rubies, Colombian emeralds &mdash;
+              each piece a legacy in the making.
+            </p>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-wrap gap-4">
+              <Link
+                href="/vault"
+                className="group inline-flex items-center gap-3 px-10 py-5
+                         bg-gold-royal hover:bg-gold-light transition-all duration-500"
+              >
+                <span className="text-[12px] font-bold tracking-[3px] uppercase text-black">
+                  Explore The Vault
+                </span>
+                <ArrowRight className="w-4 h-4 text-black group-hover:translate-x-1 transition-transform" />
+              </Link>
+
+              <Link
+                href="/contact"
+                className="group inline-flex items-center gap-3 px-10 py-5
+                         border border-white/20 hover:border-gold-royal/50 transition-all duration-500"
+              >
+                <span className="text-[12px] font-bold tracking-[3px] uppercase text-white/80
+                             group-hover:text-gold-royal transition-colors">
+                  Book Consultation
+                </span>
+              </Link>
             </div>
           </div>
-          <div>
-            <div className="text-3xl md:text-4xl font-display font-bold text-brand-gold mb-2">
-              2,000+
+
+          {/* Spacer */}
+          <div className="hidden lg:block lg:col-span-3" />
+
+          {/* Stats */}
+          <div className="lg:col-span-4 grid grid-cols-3 gap-8 border-t border-white/10 pt-8">
+            <div>
+              <p className="text-3xl lg:text-4xl font-playfair font-bold text-gold-royal">16</p>
+              <p className="text-[10px] tracking-[2px] uppercase text-white/40 mt-2">Rare Pieces</p>
             </div>
-            <div className="text-sm text-brand-gray uppercase tracking-wider">
-              Happy Couples
+            <div>
+              <p className="text-3xl lg:text-4xl font-playfair font-bold text-gold-royal">7</p>
+              <p className="text-[10px] tracking-[2px] uppercase text-white/40 mt-2">Gemstones</p>
             </div>
-          </div>
-          <div>
-            <div className="text-3xl md:text-4xl font-display font-bold text-brand-gold mb-2">
-              25+
-            </div>
-            <div className="text-sm text-brand-gray uppercase tracking-wider">
-              Countries
+            <div>
+              <p className="text-3xl lg:text-4xl font-playfair font-bold text-gold-royal">GIA</p>
+              <p className="text-[10px] tracking-[2px] uppercase text-white/40 mt-2">Certified</p>
             </div>
           </div>
         </div>
       </div>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 animate-bounce">
-        <div className="w-6 h-10 rounded-full border-2 border-brand-gold/50 flex items-start justify-center p-2">
-          <div className="w-1 h-3 bg-brand-gold rounded-full"></div>
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10">
+        <div className="flex flex-col items-center gap-3">
+          <span className="text-[9px] tracking-[3px] uppercase text-white/30">Scroll</span>
+          <div className="w-px h-12 bg-gradient-to-b from-gold-royal/50 to-transparent animate-pulse" />
         </div>
       </div>
     </section>

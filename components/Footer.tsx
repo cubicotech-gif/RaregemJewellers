@@ -1,79 +1,169 @@
 import Link from 'next/link'
-import { Gem, Mail, Phone, MapPin, Facebook, Instagram, Twitter } from 'lucide-react'
+import { Gem, Mail, Phone, MapPin, Instagram, Facebook, Twitter } from 'lucide-react'
+
+const footerLinks = {
+  collections: [
+    { label: 'Kashmir Sapphires', href: '/vault?category=sapphire' },
+    { label: 'Colombian Emeralds', href: '/vault?category=emerald' },
+    { label: 'Burmese Rubies', href: '/vault?category=ruby' },
+    { label: 'AAA Tanzanite', href: '/vault?category=tanzanite' },
+    { label: 'Russian Alexandrite', href: '/vault?category=alexandrite' },
+    { label: 'View All', href: '/vault' },
+  ],
+  company: [
+    { label: 'Our Story', href: '/about' },
+    { label: 'The Vault', href: '/vault' },
+    { label: 'Contact', href: '/contact' },
+    { label: 'Appointments', href: '/contact' },
+  ],
+  support: [
+    { label: 'Shipping & Returns', href: '#' },
+    { label: 'Ring Size Guide', href: '#' },
+    { label: 'Care Instructions', href: '#' },
+    { label: 'FAQ', href: '#' },
+    { label: 'Privacy Policy', href: '#' },
+  ],
+}
 
 export default function Footer() {
   return (
-    <footer className="bg-neutral-900 text-neutral-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Brand */}
-          <div>
-            <Link href="/" className="flex items-center space-x-2 mb-4">
-              <Gem className="h-8 w-8 text-purple-400" />
-              <span className="font-serif text-2xl font-bold text-white">
-                Rare Gems
+    <footer className="bg-obsidian border-t border-white/5">
+      {/* Main Footer */}
+      <div className="max-w-[1600px] mx-auto px-6 py-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8">
+
+          {/* Brand Column */}
+          <div className="lg:col-span-4">
+            <Link href="/" className="inline-flex items-center gap-3 mb-6">
+              <Gem className="w-6 h-6 text-gold-royal" />
+              <span className="text-xl font-playfair font-bold text-white tracking-wider">
+                RARE GEMS
               </span>
             </Link>
-            <p className="text-sm text-neutral-400 mb-4">
-              Exquisite collection of rare gemstone jewelry for the discerning collector.
+
+            <p className="text-sm text-white/40 leading-relaxed mb-8 max-w-sm font-cormorant text-lg italic">
+              Investment-grade gemstone rings handcrafted for the modern man.
+              25+ years of sourcing the world&apos;s rarest stones.
             </p>
-            <div className="flex space-x-4">
-              <a href="#" className="hover:text-purple-400 transition-colors">
-                <Facebook className="h-5 w-5" />
-              </a>
-              <a href="#" className="hover:text-purple-400 transition-colors">
-                <Instagram className="h-5 w-5" />
-              </a>
-              <a href="#" className="hover:text-purple-400 transition-colors">
-                <Twitter className="h-5 w-5" />
-              </a>
+
+            {/* Social Links */}
+            <div className="flex gap-4">
+              {[
+                { icon: Instagram, label: 'Instagram' },
+                { icon: Facebook, label: 'Facebook' },
+                { icon: Twitter, label: 'Twitter' },
+              ].map((social) => (
+                <a
+                  key={social.label}
+                  href="#"
+                  aria-label={social.label}
+                  className="w-10 h-10 border border-white/10 flex items-center justify-center
+                           hover:border-gold-royal/50 hover:bg-gold-royal/5
+                           transition-all duration-300 group"
+                >
+                  <social.icon className="w-4 h-4 text-white/40 group-hover:text-gold-royal transition-colors" />
+                </a>
+              ))}
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div>
-            <h3 className="font-semibold text-white mb-4">Quick Links</h3>
-            <ul className="space-y-2">
-              <li><Link href="/shop" className="hover:text-purple-400 transition-colors">Shop All</Link></li>
-              <li><Link href="/shop?category=womens" className="hover:text-purple-400 transition-colors">Women's Collection</Link></li>
-              <li><Link href="/shop?category=mens" className="hover:text-purple-400 transition-colors">Men's Collection</Link></li>
-              <li><Link href="/about" className="hover:text-purple-400 transition-colors">About Us</Link></li>
+          {/* Collections */}
+          <div className="lg:col-span-3">
+            <h4 className="text-[11px] font-bold tracking-[3px] uppercase text-gold-royal mb-6">
+              Collections
+            </h4>
+            <ul className="space-y-3">
+              {footerLinks.collections.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-white/40 hover:text-gold-royal transition-colors duration-300"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Customer Service */}
-          <div>
-            <h3 className="font-semibold text-white mb-4">Customer Service</h3>
-            <ul className="space-y-2">
-              <li><Link href="/contact" className="hover:text-purple-400 transition-colors">Contact Us</Link></li>
-              <li><Link href="#" className="hover:text-purple-400 transition-colors">Shipping Info</Link></li>
-              <li><Link href="#" className="hover:text-purple-400 transition-colors">Returns</Link></li>
-              <li><Link href="#" className="hover:text-purple-400 transition-colors">FAQ</Link></li>
+          {/* Company */}
+          <div className="lg:col-span-2">
+            <h4 className="text-[11px] font-bold tracking-[3px] uppercase text-gold-royal mb-6">
+              Company
+            </h4>
+            <ul className="space-y-3">
+              {footerLinks.company.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-white/40 hover:text-gold-royal transition-colors duration-300"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
           {/* Contact Info */}
-          <div>
-            <h3 className="font-semibold text-white mb-4">Contact</h3>
+          <div className="lg:col-span-3">
+            <h4 className="text-[11px] font-bold tracking-[3px] uppercase text-gold-royal mb-6">
+              Contact
+            </h4>
+            <ul className="space-y-4">
+              <li className="flex items-center gap-3">
+                <Mail className="w-4 h-4 text-gold-royal/50" />
+                <span className="text-sm text-white/40">info@raregems.com</span>
+              </li>
+              <li className="flex items-center gap-3">
+                <Phone className="w-4 h-4 text-gold-royal/50" />
+                <span className="text-sm text-white/40">+92 XXX XXXXXXX</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <MapPin className="w-4 h-4 text-gold-royal/50 mt-0.5" />
+                <span className="text-sm text-white/40">Karachi, Pakistan</span>
+              </li>
+            </ul>
+
+            {/* Support */}
+            <h4 className="text-[11px] font-bold tracking-[3px] uppercase text-gold-royal mb-4 mt-8">
+              Support
+            </h4>
             <ul className="space-y-3">
-              <li className="flex items-center space-x-2">
-                <Mail className="h-4 w-4" />
-                <span className="text-sm">info@raregems.com</span>
-              </li>
-              <li className="flex items-center space-x-2">
-                <Phone className="h-4 w-4" />
-                <span className="text-sm">+92 XXX XXXXXXX</span>
-              </li>
-              <li className="flex items-start space-x-2">
-                <MapPin className="h-4 w-4 mt-1" />
-                <span className="text-sm">Karachi, Pakistan</span>
-              </li>
+              {footerLinks.support.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-white/40 hover:text-gold-royal transition-colors duration-300"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
+      </div>
 
-        <div className="border-t border-neutral-800 mt-8 pt-8 text-center text-sm text-neutral-400">
-          <p>&copy; {new Date().getFullYear()} Rare Gems Jewelry. All rights reserved.</p>
+      {/* Bottom Bar */}
+      <div className="border-t border-white/5">
+        <div className="max-w-[1600px] mx-auto px-6 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-[11px] text-white/30 tracking-wider">
+            &copy; {new Date().getFullYear()} Rare Gems Jewellers. All rights reserved.
+          </p>
+          <div className="flex items-center gap-6">
+            <span className="text-[10px] tracking-[2px] uppercase text-white/20">
+              GIA Certified
+            </span>
+            <span className="text-white/10">&middot;</span>
+            <span className="text-[10px] tracking-[2px] uppercase text-white/20">
+              Insured Shipping
+            </span>
+            <span className="text-white/10">&middot;</span>
+            <span className="text-[10px] tracking-[2px] uppercase text-white/20">
+              Lifetime Warranty
+            </span>
+          </div>
         </div>
       </div>
     </footer>
