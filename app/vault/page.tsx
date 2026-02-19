@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { Suspense, useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import ProductCard from '@/components/products/ProductCard';
 import { products, categories, collections, type Product } from '@/data/products';
@@ -10,7 +10,7 @@ type CategoryFilter = Product['category'] | 'all';
 type CollectionFilter = Product['collection'] | 'all';
 type SortOption = 'featured' | 'price-low' | 'price-high' | 'newest' | 'rarest';
 
-export default function VaultPage() {
+function VaultContent() {
   const searchParams = useSearchParams();
   const categoryParam = searchParams.get('category');
 
@@ -63,59 +63,7 @@ export default function VaultPage() {
     priceRange[0] > 0 || priceRange[1] < 60000;
 
   return (
-    <main className="min-h-screen bg-black">
-      {/* HERO HEADER */}
-      <section className="relative pt-32 pb-16 bg-gradient-to-b from-obsidian to-black overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px]
-                        bg-gold-royal/5 rounded-full blur-[200px]" />
-        </div>
-
-        <div className="relative z-10 max-w-[1600px] mx-auto px-6 text-center">
-          <div className="flex items-center justify-center gap-4 mb-6">
-            <div className="w-20 h-px bg-gold-royal" />
-            <span className="text-[11px] font-medium tracking-[4px] uppercase text-gold-royal">
-              Rare Legacy
-            </span>
-            <div className="w-20 h-px bg-gold-royal" />
-          </div>
-
-          <h1 className="text-5xl lg:text-7xl font-bold text-white font-playfair mb-6">
-            The Vault
-          </h1>
-
-          <p className="text-xl text-white/60 max-w-3xl mx-auto font-cormorant italic mb-8">
-            {products.length} investment-grade gemstone rings. Each one hand-selected,
-            GIA certified, and crafted for legacy. Total inventory value exceeds $400,000.
-          </p>
-
-          {/* Quick Stats */}
-          <div className="flex flex-wrap items-center justify-center gap-8 text-sm">
-            <div className="text-center">
-              <p className="text-2xl font-bold text-gold-royal font-playfair">{products.length}</p>
-              <p className="text-white/40 text-xs tracking-[2px] uppercase mt-1">Pieces</p>
-            </div>
-            <div className="w-px h-10 bg-white/10" />
-            <div className="text-center">
-              <p className="text-2xl font-bold text-gold-royal font-playfair">7</p>
-              <p className="text-white/40 text-xs tracking-[2px] uppercase mt-1">Gemstones</p>
-            </div>
-            <div className="w-px h-10 bg-white/10" />
-            <div className="text-center">
-              <p className="text-2xl font-bold text-gold-royal font-playfair">4</p>
-              <p className="text-white/40 text-xs tracking-[2px] uppercase mt-1">Collections</p>
-            </div>
-            <div className="w-px h-10 bg-white/10" />
-            <div className="text-center">
-              <p className="text-2xl font-bold text-gold-royal font-playfair">
-                ${Math.min(...products.map(p => p.price)).toLocaleString()}
-              </p>
-              <p className="text-white/40 text-xs tracking-[2px] uppercase mt-1">Starting</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
+    <>
       {/* MAIN CONTENT */}
       <section className="max-w-[1600px] mx-auto px-6 py-12">
         <div className="flex gap-8">
@@ -387,6 +335,84 @@ export default function VaultPage() {
           </div>
         </div>
       )}
+    </>
+  );
+}
+
+function VaultLoadingFallback() {
+  return (
+    <section className="max-w-[1600px] mx-auto px-6 py-12">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+        {[...Array(6)].map((_, i) => (
+          <div key={i} className="animate-pulse">
+            <div className="aspect-square bg-steel mb-4" />
+            <div className="h-4 bg-steel w-3/4 mb-2" />
+            <div className="h-3 bg-steel w-1/2" />
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+export default function VaultPage() {
+  return (
+    <main className="min-h-screen bg-black">
+      {/* HERO HEADER */}
+      <section className="relative pt-32 pb-16 bg-gradient-to-b from-obsidian to-black overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px]
+                        bg-gold-royal/5 rounded-full blur-[200px]" />
+        </div>
+
+        <div className="relative z-10 max-w-[1600px] mx-auto px-6 text-center">
+          <div className="flex items-center justify-center gap-4 mb-6">
+            <div className="w-20 h-px bg-gold-royal" />
+            <span className="text-[11px] font-medium tracking-[4px] uppercase text-gold-royal">
+              Rare Legacy
+            </span>
+            <div className="w-20 h-px bg-gold-royal" />
+          </div>
+
+          <h1 className="text-5xl lg:text-7xl font-bold text-white font-playfair mb-6">
+            The Vault
+          </h1>
+
+          <p className="text-xl text-white/60 max-w-3xl mx-auto font-cormorant italic mb-8">
+            {products.length} investment-grade gemstone rings. Each one hand-selected,
+            GIA certified, and crafted for legacy. Total inventory value exceeds $400,000.
+          </p>
+
+          {/* Quick Stats */}
+          <div className="flex flex-wrap items-center justify-center gap-8 text-sm">
+            <div className="text-center">
+              <p className="text-2xl font-bold text-gold-royal font-playfair">{products.length}</p>
+              <p className="text-white/40 text-xs tracking-[2px] uppercase mt-1">Pieces</p>
+            </div>
+            <div className="w-px h-10 bg-white/10" />
+            <div className="text-center">
+              <p className="text-2xl font-bold text-gold-royal font-playfair">7</p>
+              <p className="text-white/40 text-xs tracking-[2px] uppercase mt-1">Gemstones</p>
+            </div>
+            <div className="w-px h-10 bg-white/10" />
+            <div className="text-center">
+              <p className="text-2xl font-bold text-gold-royal font-playfair">4</p>
+              <p className="text-white/40 text-xs tracking-[2px] uppercase mt-1">Collections</p>
+            </div>
+            <div className="w-px h-10 bg-white/10" />
+            <div className="text-center">
+              <p className="text-2xl font-bold text-gold-royal font-playfair">
+                ${Math.min(...products.map(p => p.price)).toLocaleString()}
+              </p>
+              <p className="text-white/40 text-xs tracking-[2px] uppercase mt-1">Starting</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <Suspense fallback={<VaultLoadingFallback />}>
+        <VaultContent />
+      </Suspense>
     </main>
   );
 }
