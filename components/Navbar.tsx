@@ -11,102 +11,88 @@ export default function Navbar() {
   const totalItems = useCartStore((state) => state.getTotalItems())
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20)
-    }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
+    const onScroll = () => setScrolled(window.scrollY > 50)
+    window.addEventListener('scroll', onScroll)
+    return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  const navLinks = [
+  const links = [
     { href: '/', label: 'Home' },
-    { href: '/vault', label: 'The Vault' },
+    { href: '/vault', label: 'Collection' },
     { href: '/shop', label: 'Shop' },
     { href: '/about', label: 'About' },
     { href: '/contact', label: 'Contact' },
   ]
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-      scrolled
-        ? 'bg-black/95 backdrop-blur-md border-b border-white/5 shadow-luxury'
-        : 'bg-transparent'
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
+      scrolled ? 'glass-strong shadow-glass' : 'bg-transparent'
     }`}>
-      <div className="max-w-[1600px] mx-auto px-6">
+      <div className="max-w-[1400px] mx-auto px-8 lg:px-16">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-3 group">
-            <Gem className="h-7 w-7 text-gold-royal group-hover:text-gold-light transition-colors" />
-            <div className="flex flex-col">
-              <span className="font-playfair text-xl font-bold text-white tracking-wider group-hover:text-gold-royal transition-colors">
-                Rare Gems
-              </span>
-              <span className="text-[8px] tracking-[4px] uppercase text-gold-royal/60 -mt-0.5">
-                Legacy Collection
-              </span>
-            </div>
+          <Link href="/" className="group flex items-center gap-3">
+            <Gem className="w-5 h-5 text-gold-royal/70 group-hover:text-gold-royal transition-colors duration-500" />
+            <span className="text-[13px] font-sans font-medium tracking-[4px] uppercase text-ivory/80
+                           group-hover:text-ivory transition-colors duration-500">
+              Rare Gems
+            </span>
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-10">
-            {navLinks.map((link) => (
+          {/* Desktop links */}
+          <div className="hidden lg:flex items-center gap-12">
+            {links.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-[11px] font-medium tracking-[2px] uppercase text-white/70
-                         hover:text-gold-royal transition-colors duration-300 relative group"
+                className="relative text-[10px] font-sans font-medium tracking-[3px] uppercase text-ivory/35
+                         hover:text-ivory transition-colors duration-500 py-2"
               >
                 {link.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-px bg-gold-royal
-                             group-hover:w-full transition-all duration-300" />
               </Link>
             ))}
           </div>
 
-          {/* Right Side */}
-          <div className="flex items-center space-x-6">
-            {/* Cart */}
+          {/* Right */}
+          <div className="flex items-center gap-6">
             <Link href="/cart" className="relative group">
-              <ShoppingCart className="h-5 w-5 text-white/70 group-hover:text-gold-royal transition-colors" />
+              <ShoppingCart className="w-[18px] h-[18px] text-ivory/35 group-hover:text-ivory transition-colors duration-500" />
               {totalItems > 0 && (
-                <span className="absolute -top-2 -right-2 bg-gold-royal text-black text-[10px]
-                             font-bold min-w-[18px] h-[18px] flex items-center justify-center">
+                <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-gold-royal text-obsidian
+                             text-[8px] font-bold flex items-center justify-center rounded-full">
                   {totalItems}
                 </span>
               )}
             </Link>
 
-            {/* Mobile menu button */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="lg:hidden text-white/70 hover:text-gold-royal transition-colors"
+              className="lg:hidden text-ivory/35 hover:text-ivory transition-colors duration-500"
             >
-              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Navigation */}
-      {isOpen && (
-        <div className="lg:hidden bg-black/98 backdrop-blur-md border-t border-white/5">
-          <div className="px-6 py-6 space-y-1">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setIsOpen(false)}
-                className="block px-4 py-3 text-[12px] font-medium tracking-[2px] uppercase
-                         text-white/70 hover:text-gold-royal hover:bg-white/5
-                         transition-all duration-300 border-l-2 border-transparent
-                         hover:border-gold-royal"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
+      {/* Mobile */}
+      <div className={`lg:hidden glass-strong overflow-hidden transition-all duration-500 ${
+        isOpen ? 'max-h-80 border-t border-white/[0.04]' : 'max-h-0'
+      }`}>
+        <div className="max-w-[1400px] mx-auto px-8 py-6 space-y-1">
+          {links.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              onClick={() => setIsOpen(false)}
+              className="block py-3 text-[11px] font-sans font-medium tracking-[3px] uppercase
+                       text-ivory/35 hover:text-gold-royal transition-colors duration-300"
+            >
+              {link.label}
+            </Link>
+          ))}
         </div>
-      )}
+      </div>
     </nav>
   )
 }

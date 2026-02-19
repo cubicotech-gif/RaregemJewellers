@@ -1,18 +1,18 @@
 'use client'
 
-import { Star, Quote } from 'lucide-react'
+import { Star } from 'lucide-react'
 
 const testimonials = [
   {
     name: 'Michael R.',
     location: 'New York',
-    text: 'The Kashmir sapphire ring I acquired is not just jewellery — it is an heirloom. The craftsmanship and rarity are unmatched anywhere.',
+    text: 'The Kashmir sapphire ring I acquired is not just jewellery — it is an heirloom. The craftsmanship and rarity are unmatched.',
     rating: 5,
   },
   {
     name: 'David K.',
     location: 'Los Angeles',
-    text: 'I wanted something that stood apart from typical diamond rings. The tanzanite is incredible — everyone asks about it. Worth every penny.',
+    text: 'I wanted something that stood apart from typical diamond rings. The tanzanite is incredible — everyone asks about it.',
     rating: 5,
   },
   {
@@ -25,57 +25,40 @@ const testimonials = [
 
 export function TestimonialsSection() {
   return (
-    <section className="py-32 bg-gradient-to-b from-black via-obsidian to-black">
-      <div className="max-w-[1600px] mx-auto px-6">
-        {/* Section Header */}
-        <div className="text-center mb-20">
-          <div className="flex items-center justify-center gap-4 mb-6">
-            <div className="w-16 h-px bg-gold-royal" />
-            <span className="text-[11px] font-medium tracking-[4px] uppercase text-gold-royal">
+    <section className="py-32 lg:py-40 bg-obsidian relative overflow-hidden">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
+                    w-[500px] h-[500px] bg-gold-royal/[0.02] rounded-full blur-[200px]" />
+
+      <div className="relative z-10 max-w-[1400px] mx-auto px-8 lg:px-16">
+        {/* Header */}
+        <div className="max-w-xl mb-20">
+          <div className="flex items-center gap-5 mb-8">
+            <div className="w-10 h-px bg-gold-royal/60" />
+            <span className="text-[10px] font-sans font-medium tracking-[5px] uppercase text-gold-royal/80">
               Testimonials
             </span>
-            <div className="w-16 h-px bg-gold-royal" />
           </div>
-          <h2 className="text-4xl lg:text-5xl font-playfair font-bold text-white mb-4">
-            Stories From Collectors
+          <h2 className="text-4xl lg:text-5xl font-cormorant font-light text-ivory/90 leading-[1.1]">
+            Stories From <span className="font-semibold text-ivory/40">Collectors</span>
           </h2>
-          <p className="text-lg text-white/50 font-cormorant italic">
-            Real men. Real commitments. Real rare gems.
-          </p>
         </div>
 
-        {/* Testimonials Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+        {/* Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {testimonials.map((t, i) => (
-            <div
-              key={i}
-              className="group relative p-10 bg-steel/30 border border-white/5
-                       hover:border-gold-royal/20 transition-all duration-500"
-            >
-              {/* Quote Icon */}
-              <Quote className="w-10 h-10 text-gold-royal/20 mb-6" />
-
-              {/* Stars */}
-              <div className="flex gap-1 mb-6">
+            <div key={i} className="group glass p-10 hover:glass-rose transition-all duration-700">
+              <div className="flex gap-1 mb-8">
                 {[...Array(t.rating)].map((_, j) => (
-                  <Star key={j} className="w-4 h-4 fill-gold-royal text-gold-royal" />
+                  <Star key={j} className="w-3 h-3 fill-gold-royal/40 text-gold-royal/40" />
                 ))}
               </div>
-
-              {/* Quote Text */}
-              <p className="text-white/80 leading-relaxed mb-8 font-cormorant italic text-lg">
+              <p className="text-ivory/45 leading-relaxed mb-10 font-cormorant italic text-lg">
                 &ldquo;{t.text}&rdquo;
               </p>
-
-              {/* Author */}
-              <div className="pt-6 border-t border-white/5">
-                <p className="text-sm font-bold text-white tracking-wide">{t.name}</p>
-                <p className="text-xs text-white/40 tracking-[2px] uppercase mt-1">{t.location}</p>
+              <div className="pt-6 border-t border-white/[0.04]">
+                <p className="text-xs font-sans font-medium text-ivory/60 tracking-wide">{t.name}</p>
+                <p className="text-[10px] font-sans text-ivory/25 tracking-[2px] uppercase mt-1">{t.location}</p>
               </div>
-
-              {/* Hover accent line */}
-              <div className="absolute bottom-0 left-0 w-0 h-px bg-gold-royal
-                           group-hover:w-full transition-all duration-700" />
             </div>
           ))}
         </div>

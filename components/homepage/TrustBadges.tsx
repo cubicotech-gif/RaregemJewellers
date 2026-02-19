@@ -2,29 +2,20 @@ import { Shield, Truck, RotateCcw, Award } from 'lucide-react'
 
 export function TrustBadges() {
   const badges = [
-    { icon: Shield, title: 'Lifetime Warranty', description: 'Every piece guaranteed' },
-    { icon: Truck, title: 'Insured Shipping', description: 'Worldwide delivery' },
-    { icon: RotateCcw, title: '30-Day Returns', description: 'No questions asked' },
-    { icon: Award, title: 'GIA Certified', description: 'Authenticated gems' },
+    { icon: Shield, label: 'Lifetime Warranty' },
+    { icon: Truck, label: 'Insured Shipping' },
+    { icon: RotateCcw, label: '30-Day Returns' },
+    { icon: Award, label: 'GIA Certified' },
   ]
 
   return (
-    <section className="py-8 border-y border-white/5 bg-black">
-      <div className="max-w-[1600px] mx-auto px-6">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-12">
-          {badges.map((badge, index) => (
-            <div key={index} className="flex items-center gap-4 group">
-              <div className="flex-shrink-0 w-12 h-12 border border-gold-royal/20
-                           flex items-center justify-center
-                           group-hover:border-gold-royal/50 transition-all duration-300">
-                <badge.icon className="w-5 h-5 text-gold-royal" />
-              </div>
-              <div>
-                <h4 className="text-[11px] font-bold text-white tracking-[1px] uppercase">
-                  {badge.title}
-                </h4>
-                <p className="text-[11px] text-white/40 mt-0.5">{badge.description}</p>
-              </div>
+    <section className="py-6 border-y border-white/[0.04] bg-obsidian">
+      <div className="max-w-[1400px] mx-auto px-8 lg:px-16">
+        <div className="flex items-center justify-between gap-8 overflow-x-auto scrollbar-hide">
+          {badges.map((b, i) => (
+            <div key={i} className="flex items-center gap-3 shrink-0">
+              <b.icon className="w-4 h-4 text-ivory/15" />
+              <span className="text-[10px] font-sans tracking-[2px] uppercase text-ivory/25">{b.label}</span>
             </div>
           ))}
         </div>

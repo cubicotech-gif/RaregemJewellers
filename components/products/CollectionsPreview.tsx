@@ -5,185 +5,80 @@ import { ArrowRight } from 'lucide-react';
 import { getProductsByCategory } from '@/data/products';
 
 const COLLECTIONS = [
-  {
-    id: 'sapphire',
-    title: 'Sapphire',
-    subtitle: 'Kashmir | Ceylon | Australian',
-    description: 'The blue kings covet. From Himalayan peaks to Ceylon mines.',
-    icon: '💎',
-    gradient: 'from-blue-900/40 via-blue-800/20 to-black',
-    accentColor: 'text-blue-400',
-    borderColor: 'border-blue-500/20',
-  },
-  {
-    id: 'emerald',
-    title: 'Emerald',
-    subtitle: 'Colombian | Zambian',
-    description: 'Green with intent. Muzo mines to African depths.',
-    icon: '💚',
-    gradient: 'from-emerald-900/40 via-emerald-800/20 to-black',
-    accentColor: 'text-emerald-400',
-    borderColor: 'border-emerald-500/20',
-  },
-  {
-    id: 'tanzanite',
-    title: 'Tanzanite',
-    subtitle: 'AAA-Grade | Violet',
-    description: '1000x rarer than diamond. Found in only 14km\u00B2 on Earth.',
-    icon: '💜',
-    gradient: 'from-purple-900/40 via-purple-800/20 to-black',
-    accentColor: 'text-purple-400',
-    borderColor: 'border-purple-500/20',
-  },
-  {
-    id: 'ruby',
-    title: 'Ruby',
-    subtitle: 'Pigeon Blood | Burmese',
-    description: 'Blood and fire. Mogok Valley legends.',
-    icon: '❤️',
-    gradient: 'from-red-900/40 via-red-800/20 to-black',
-    accentColor: 'text-red-400',
-    borderColor: 'border-red-500/20',
-  },
+  { id: 'sapphire', title: 'Sapphire', subtitle: 'Kashmir | Ceylon', icon: '💎' },
+  { id: 'emerald', title: 'Emerald', subtitle: 'Colombian | Zambian', icon: '💚' },
+  { id: 'tanzanite', title: 'Tanzanite', subtitle: 'AAA-Grade', icon: '💜' },
+  { id: 'ruby', title: 'Ruby', subtitle: 'Pigeon Blood', icon: '❤️' },
 ];
 
 export default function CollectionsPreview() {
   return (
-    <section className="relative bg-black py-20 lg:py-32 overflow-hidden">
-      {/* Background glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px]
-                      bg-gold-royal/5 rounded-full blur-[150px]" />
+    <section className="relative bg-obsidian py-32 lg:py-40 overflow-hidden">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
+                    w-[600px] h-[600px] bg-gold-royal/[0.02] rounded-full blur-[200px]" />
 
-      <div className="relative z-10 max-w-[1600px] mx-auto px-6">
-
-        {/* SECTION HEADER */}
-        <div className="text-center mb-16 lg:mb-20">
-          <div className="flex items-center justify-center gap-4 mb-6">
-            <div className="w-16 h-px bg-gold-royal" />
-            <span className="text-[11px] font-medium tracking-[4px] uppercase text-gold-royal">
-              The Collections
+      <div className="relative z-10 max-w-[1400px] mx-auto px-8 lg:px-16">
+        {/* Header */}
+        <div className="max-w-xl mb-20">
+          <div className="flex items-center gap-5 mb-8">
+            <div className="w-10 h-px bg-gold-royal/60" />
+            <span className="text-[10px] font-sans font-medium tracking-[5px] uppercase text-gold-royal/80">
+              Collections
             </span>
-            <div className="w-16 h-px bg-gold-royal" />
           </div>
-
-          <h2 className="text-4xl lg:text-5xl font-bold text-white font-playfair mb-4">
-            Choose Your Legacy
+          <h2 className="text-4xl lg:text-5xl font-cormorant font-light text-ivory/90 leading-[1.1] mb-5">
+            Choose Your <span className="font-semibold gradient-gold-text">Legacy</span>
           </h2>
-
-          <p className="text-lg text-white/50 max-w-2xl mx-auto font-cormorant italic">
-            Four elements. Four paths to immortality. Each collection
-            hand-curated for rarity, crafted for generations.
+          <p className="text-base text-ivory/35 font-sans font-light leading-relaxed">
+            Four rare gemstone families. Each hand-curated for rarity, crafted for generations.
           </p>
         </div>
 
-        {/* COLLECTIONS GRID - Frank Jewelry inspired opacity hover */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-          {COLLECTIONS.map((collection) => {
-            const collectionProducts = getProductsByCategory(collection.id as 'sapphire' | 'emerald' | 'ruby' | 'tanzanite');
-            const priceFrom = collectionProducts.length > 0
-              ? Math.min(...collectionProducts.map(p => p.price))
-              : 0;
+        {/* Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {COLLECTIONS.map((col) => {
+            const items = getProductsByCategory(col.id as 'sapphire' | 'emerald' | 'ruby' | 'tanzanite');
+            const from = items.length ? Math.min(...items.map(p => p.price)) : 0;
 
             return (
-              <Link
-                key={collection.id}
-                href={`/vault?category=${collection.id}`}
-                className="group block"
-              >
-                {/* Image Area - Opacity transition on hover */}
-                <div className={`
-                  relative aspect-[3/4] bg-gradient-to-b ${collection.gradient}
-                  border ${collection.borderColor} overflow-hidden mb-5
-                  opacity-50 group-hover:opacity-100 transition-all duration-700
-                `}>
-                  {/* Background icon */}
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-                                text-[150px] opacity-20 group-hover:opacity-40
-                                transition-all duration-700 group-hover:scale-110 select-none">
-                    {collection.icon}
+              <Link key={col.id} href={`/vault?category=${col.id}`} className="group block">
+                <div className="relative aspect-[3/4] bg-steel overflow-hidden mb-5
+                              opacity-50 group-hover:opacity-100 transition-all duration-700">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="text-[120px] select-none opacity-15 group-hover:opacity-30
+                                  group-hover:scale-105 transition-all duration-700">
+                      {col.icon}
+                    </span>
                   </div>
-
-                  {/* Bottom gradient overlay */}
-                  <div className="absolute bottom-0 left-0 right-0 p-6
-                                bg-gradient-to-t from-black/80 to-transparent">
+                  <div className="absolute inset-0 glass opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                  <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-obsidian/90 to-transparent">
                     <div className="flex items-end justify-between">
-                      <div>
-                        <p className="text-[10px] text-white/40 tracking-[2px] uppercase mb-1">From</p>
-                        <p className="text-xl font-bold text-white font-playfair">
-                          ${priceFrom.toLocaleString()}
-                        </p>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-[10px] text-white/40 tracking-[2px] uppercase mb-1">Pieces</p>
-                        <p className="text-xl font-bold text-white font-playfair">
-                          {collectionProducts.length}
-                        </p>
-                      </div>
+                      <span className="text-sm font-sans text-ivory/70">${from.toLocaleString()}</span>
+                      <span className="text-[10px] font-sans text-ivory/30">{items.length} pieces</span>
                     </div>
                   </div>
-
-                  {/* Shimmer */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent
-                                -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
                 </div>
-
-                {/* Content - Clean minimal */}
-                <div className="space-y-2">
-                  <h3 className={`text-xl font-bold font-playfair ${collection.accentColor}
-                               group-hover:text-gold-royal transition-colors duration-500`}>
-                    {collection.title}
-                  </h3>
-                  <p className="text-[11px] text-white/40 tracking-wider">
-                    {collection.subtitle}
-                  </p>
-                  <p className="text-sm text-white/50 font-cormorant italic">
-                    {collection.description}
-                  </p>
-
-                  {/* Explore link */}
-                  <div className="flex items-center gap-2 pt-2
-                                opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <span className="text-[10px] tracking-[2px] uppercase text-gold-royal font-medium">
-                      Explore Collection
-                    </span>
-                    <ArrowRight className="w-3 h-3 text-gold-royal group-hover:translate-x-1 transition-transform" />
-                  </div>
-                </div>
+                <h3 className="text-lg font-cormorant font-semibold text-ivory/60
+                             group-hover:text-ivory transition-colors duration-500 mb-1">
+                  {col.title}
+                </h3>
+                <p className="text-[10px] font-sans tracking-[2px] uppercase text-ivory/25">{col.subtitle}</p>
               </Link>
             );
           })}
         </div>
 
-        {/* BOTTOM CTA */}
-        <div className="text-center mt-16 pt-16 border-t border-white/5">
-          <p className="text-white/50 mb-6 font-cormorant italic text-lg">
-            Can&apos;t decide? Each stone has a story. Let us help you find yours.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link
-              href="/vault"
-              className="group inline-flex items-center gap-3 px-10 py-4
-                       bg-transparent border border-gold-royal
-                       hover:bg-gold-royal transition-all duration-500"
-            >
-              <span className="text-[12px] font-bold tracking-[3px] uppercase text-gold-royal
-                             group-hover:text-black transition-colors">
-                View All Collections
-              </span>
-              <ArrowRight className="w-4 h-4 text-gold-royal group-hover:text-black group-hover:translate-x-1 transition-all" />
-            </Link>
-
-            <Link
-              href="/contact"
-              className="px-10 py-4 bg-transparent border border-white/20
-                       hover:border-gold-royal/50 transition-all duration-300"
-            >
-              <span className="text-[12px] font-medium tracking-[2px] uppercase text-white/60
-                             hover:text-gold-royal transition-colors">
-                Book Consultation
-              </span>
-            </Link>
-          </div>
+        {/* CTA */}
+        <div className="mt-20 flex items-center gap-8">
+          <Link href="/vault"
+            className="group glass-rose px-8 py-4 inline-flex items-center gap-4 hover:bg-gold-royal/10 transition-all duration-500">
+            <span className="text-[11px] font-sans font-medium tracking-[3px] uppercase text-ivory/80">View All</span>
+            <ArrowRight className="w-4 h-4 text-gold-royal group-hover:translate-x-1 transition-transform duration-500" />
+          </Link>
+          <Link href="/contact"
+            className="text-[11px] font-sans font-medium tracking-[3px] uppercase text-ivory/30 hover:text-gold-royal transition-colors duration-500">
+            Book Consultation
+          </Link>
         </div>
       </div>
     </section>

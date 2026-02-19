@@ -3,7 +3,8 @@
 import { useState } from 'react';
 import ProductCard from './ProductCard';
 import { products, categories, type Product } from '@/data/products';
-import { SlidersHorizontal } from 'lucide-react';
+import { SlidersHorizontal, ArrowRight } from 'lucide-react';
+import Link from 'next/link';
 
 type CategoryFilter = Product['category'] | 'all';
 type SortOption = 'featured' | 'price-low' | 'price-high' | 'newest' | 'rarest';
@@ -19,149 +20,110 @@ export default function ProductsGrid() {
 
   const sortedProducts = [...filteredProducts].sort((a, b) => {
     switch (sortBy) {
-      case 'price-low':
-        return a.price - b.price;
-      case 'price-high':
-        return b.price - a.price;
-      case 'newest':
-        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-      case 'rarest':
-        return a.quantity - b.quantity;
-      case 'featured':
-      default:
-        return (b.featured ? 1 : 0) - (a.featured ? 1 : 0);
+      case 'price-low': return a.price - b.price;
+      case 'price-high': return b.price - a.price;
+      case 'newest': return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+      case 'rarest': return a.quantity - b.quantity;
+      default: return (b.featured ? 1 : 0) - (a.featured ? 1 : 0);
     }
   });
 
   return (
-    <section className="relative bg-black py-20 lg:py-32">
-      <div className="max-w-[1600px] mx-auto px-6">
-
-        {/* SECTION HEADER */}
-        <div className="text-center mb-16">
-          <div className="flex items-center justify-center gap-4 mb-6">
-            <div className="w-16 h-px bg-gold-royal" />
-            <span className="text-[11px] font-medium tracking-[4px] uppercase text-gold-royal">
-              The Vault
-            </span>
-            <div className="w-16 h-px bg-gold-royal" />
+    <section className="relative bg-obsidian py-20 lg:py-32">
+      <div className="max-w-[1400px] mx-auto px-8 lg:px-16">
+        {/* Header */}
+        <div className="max-w-xl mb-16">
+          <div className="flex items-center gap-5 mb-8">
+            <div className="w-10 h-px bg-gold-royal/60" />
+            <span className="text-[10px] font-sans font-medium tracking-[5px] uppercase text-gold-royal/80">The Vault</span>
           </div>
-
-          <h2 className="text-4xl lg:text-5xl font-bold text-white font-playfair mb-4">
-            Legends in Stock
+          <h2 className="text-4xl lg:text-5xl font-cormorant font-light text-ivory/90 leading-[1.1] mb-4">
+            Legends In <span className="font-semibold text-ivory/40">Stock</span>
           </h2>
-
-          <p className="text-lg text-white/60 max-w-2xl mx-auto font-cormorant italic">
+          <p className="text-base text-ivory/35 font-sans font-light">
             Each piece hand-selected for rarity, each setting crafted for legacy.
-            Availability changes as quickly as legends are made.
           </p>
         </div>
 
-        {/* FILTERS & SORT */}
+        {/* Filters */}
         <div className="mb-12">
-          {/* Mobile Filter Toggle */}
           <button
             onClick={() => setShowFilters(!showFilters)}
-            className="lg:hidden w-full mb-6 px-6 py-4 bg-steel border border-white/10
-                     hover:border-gold-royal/50 transition-all duration-300 flex items-center justify-between"
+            className="lg:hidden w-full mb-6 glass px-6 py-4 flex items-center justify-between"
           >
-            <span className="text-sm font-medium tracking-[2px] uppercase text-white flex items-center gap-3">
-              <SlidersHorizontal className="w-5 h-5" />
-              Filters & Sort
+            <span className="text-[11px] font-sans tracking-[2px] uppercase text-ivory/60 flex items-center gap-3">
+              <SlidersHorizontal className="w-4 h-4" /> Filters
             </span>
-            <span className="text-xs text-gold-royal">
+            <span className="text-[10px] text-gold-royal/60">
               {selectedCategory === 'all' ? 'All' : categories.find(c => c.id === selectedCategory)?.name}
             </span>
           </button>
 
-          {/* Desktop Filters */}
-          <div className={`
-            lg:flex items-center justify-between gap-8
-            ${showFilters ? 'block' : 'hidden lg:flex'}
-          `}>
-
-            {/* CATEGORY FILTERS */}
-            <div className="flex flex-wrap gap-3 mb-6 lg:mb-0">
+          <div className={`lg:flex items-center justify-between gap-8 ${showFilters ? 'block' : 'hidden lg:flex'}`}>
+            <div className="flex flex-wrap gap-2 mb-6 lg:mb-0">
               <button
                 onClick={() => setSelectedCategory('all')}
-                className={`px-6 py-3 text-[11px] font-bold tracking-[2px] uppercase
-                         transition-all duration-300 border
-                         ${selectedCategory === 'all'
-                           ? 'bg-gold-royal border-gold-royal text-black'
-                           : 'bg-transparent border-white/20 text-white hover:border-gold-royal/50'
-                         }`}
+                className={`px-5 py-2.5 text-[10px] font-sans tracking-[2px] uppercase transition-all duration-300
+                  ${selectedCategory === 'all'
+                    ? 'glass-rose text-ivory/80'
+                    : 'glass text-ivory/35 hover:text-ivory/60'
+                  }`}
               >
                 All ({products.length})
               </button>
-
-              {categories.map(category => {
-                const count = products.filter(p => p.category === category.id).length;
+              {categories.map(cat => {
+                const count = products.filter(p => p.category === cat.id).length;
                 return (
                   <button
-                    key={category.id}
-                    onClick={() => setSelectedCategory(category.id as CategoryFilter)}
-                    className={`px-5 py-3 text-[11px] font-bold tracking-[2px] uppercase
-                             transition-all duration-300 border
-                             ${selectedCategory === category.id
-                               ? 'bg-gold-royal border-gold-royal text-black'
-                               : 'bg-transparent border-white/20 text-white hover:border-gold-royal/50'
-                             }`}
+                    key={cat.id}
+                    onClick={() => setSelectedCategory(cat.id as CategoryFilter)}
+                    className={`px-5 py-2.5 text-[10px] font-sans tracking-[2px] uppercase transition-all duration-300
+                      ${selectedCategory === cat.id
+                        ? 'glass-rose text-ivory/80'
+                        : 'glass text-ivory/35 hover:text-ivory/60'
+                      }`}
                   >
-                    {category.icon} {category.name} ({count})
+                    {cat.name} ({count})
                   </button>
                 );
               })}
             </div>
 
-            {/* SORT DROPDOWN */}
-            <div className="relative">
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value as SortOption)}
-                className="appearance-none px-6 py-3 pr-12 bg-steel border border-white/20
-                         hover:border-gold-royal/50 transition-all duration-300
-                         text-[11px] font-medium tracking-[2px] uppercase text-white
-                         cursor-pointer focus:outline-none focus:border-gold-royal"
-              >
-                <option value="featured">Featured First</option>
-                <option value="price-low">Price: Low to High</option>
-                <option value="price-high">Price: High to Low</option>
-                <option value="newest">Newest Arrivals</option>
-                <option value="rarest">Rarest First</option>
-              </select>
-              <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
-                <svg className="w-4 h-4 text-gold-royal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </div>
-            </div>
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value as SortOption)}
+              className="appearance-none px-5 py-2.5 pr-10 glass text-[10px] font-sans tracking-[2px]
+                       uppercase text-ivory/35 cursor-pointer focus:outline-none
+                       bg-[url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22rgba(183%2C110%2C121%2C0.5)%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22M6%209l6%206%206-6%22%2F%3E%3C%2Fsvg%3E')]
+                       bg-no-repeat bg-[right_12px_center]"
+            >
+              <option value="featured">Featured</option>
+              <option value="price-low">Price: Low</option>
+              <option value="price-high">Price: High</option>
+              <option value="newest">Newest</option>
+              <option value="rarest">Rarest</option>
+            </select>
           </div>
         </div>
 
-        {/* PRODUCTS GRID */}
+        {/* Grid */}
         {sortedProducts.length > 0 ? (
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
               {sortedProducts.map((product, index) => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  priority={index < 3}
-                />
+                <ProductCard key={product.id} product={product} priority={index < 3} />
               ))}
             </div>
-
-            {/* RESULTS COUNT */}
-            <div className="text-center mt-16 pt-16 border-t border-white/5">
-              <p className="text-sm text-white/60 tracking-wide">
-                Showing <span className="text-gold-royal font-bold">{sortedProducts.length}</span> pieces of legacy
+            <div className="text-center mt-16 pt-12 border-t border-white/[0.04]">
+              <p className="text-[11px] text-ivory/25 font-sans tracking-wider">
+                Showing {sortedProducts.length} pieces
               </p>
             </div>
           </>
         ) : (
           <div className="text-center py-20">
-            <p className="text-xl text-white/60 font-cormorant italic">
-              No products match your criteria. Expanding your search may reveal hidden gems.
+            <p className="text-lg text-ivory/35 font-cormorant italic">
+              No products match your criteria.
             </p>
           </div>
         )}
@@ -170,124 +132,80 @@ export default function ProductsGrid() {
   );
 }
 
-// FEATURED COLLECTION SECTION (for homepage)
+// FEATURED COLLECTION (homepage)
 export function FeaturedCollection() {
-  const featuredProducts = products.filter(p => p.featured).slice(0, 3);
+  const featured = products.filter(p => p.featured).slice(0, 3);
 
   return (
-    <section className="relative bg-gradient-to-b from-black via-obsidian to-black py-20 lg:py-32">
-      <div className="max-w-[1600px] mx-auto px-6">
-
-        {/* SECTION HEADER */}
-        <div className="text-center mb-16">
-          <div className="flex items-center justify-center gap-4 mb-6">
-            <div className="w-16 h-px bg-gold-royal" />
-            <span className="text-[11px] font-medium tracking-[4px] uppercase text-gold-royal">
-              Alpha Stones
-            </span>
-            <div className="w-16 h-px bg-gold-royal" />
+    <section className="relative bg-obsidian py-32 lg:py-40">
+      <div className="max-w-[1400px] mx-auto px-8 lg:px-16">
+        <div className="max-w-xl mb-20">
+          <div className="flex items-center gap-5 mb-8">
+            <div className="w-10 h-px bg-gold-royal/60" />
+            <span className="text-[10px] font-sans font-medium tracking-[5px] uppercase text-gold-royal/80">Featured</span>
           </div>
-
-          <h2 className="text-4xl lg:text-5xl font-bold text-white font-playfair mb-4">
-            The Pinnacle Collection
+          <h2 className="text-4xl lg:text-5xl font-cormorant font-light text-ivory/90 leading-[1.1] mb-5">
+            The Pinnacle <span className="font-semibold text-ivory/40">Collection</span>
           </h2>
-
-          <p className="text-lg text-white/60 max-w-2xl mx-auto font-cormorant italic">
-            Museum-quality gemstones. Investment-grade rarity. Legacy-defining craft.
+          <p className="text-base text-ivory/35 font-sans font-light">
+            Museum-quality gemstones. Investment-grade rarity.
           </p>
         </div>
 
-        {/* FEATURED PRODUCTS */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-10">
-          {featuredProducts.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              priority={true}
-            />
+          {featured.map((product) => (
+            <ProductCard key={product.id} product={product} priority />
           ))}
         </div>
 
-        {/* CTA */}
-        <div className="text-center mt-16">
-          <a
-            href="/vault"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-transparent border-2 border-gold-royal
-                     hover:bg-gold-royal transition-all duration-500 group"
-          >
-            <span className="text-[13px] font-bold tracking-[3px] uppercase text-gold-royal
-                           group-hover:text-black transition-colors">
-              View Complete Vault
-            </span>
-            <svg className="w-5 h-5 text-gold-royal group-hover:text-black group-hover:translate-x-1 transition-all"
-                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </a>
+        <div className="mt-20">
+          <Link href="/vault"
+            className="group glass-rose px-8 py-4 inline-flex items-center gap-4 hover:bg-gold-royal/10 transition-all duration-500">
+            <span className="text-[11px] font-sans font-medium tracking-[3px] uppercase text-ivory/80">View Complete Vault</span>
+            <ArrowRight className="w-4 h-4 text-gold-royal group-hover:translate-x-1 transition-transform duration-500" />
+          </Link>
         </div>
       </div>
     </section>
   );
 }
 
-// CATEGORY SHOWCASE SECTION (for homepage)
+// CATEGORY SHOWCASE (homepage)
 export function CategoryShowcase() {
   return (
-    <section className="relative bg-black py-20 lg:py-32">
-      <div className="max-w-[1600px] mx-auto px-6">
-
-        {/* SECTION HEADER */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl lg:text-5xl font-bold text-white font-playfair mb-4">
-            Explore by Gemstone
+    <section className="relative bg-obsidian py-32 lg:py-40">
+      <div className="max-w-[1400px] mx-auto px-8 lg:px-16">
+        <div className="max-w-xl mb-20">
+          <h2 className="text-4xl lg:text-5xl font-cormorant font-light text-ivory/90 leading-[1.1] mb-5">
+            Explore by <span className="font-semibold text-ivory/40">Gemstone</span>
           </h2>
-          <p className="text-lg text-white/60 max-w-2xl mx-auto font-cormorant italic">
+          <p className="text-base text-ivory/35 font-sans font-light">
             Each gemstone tells a different story. Which will be yours?
           </p>
         </div>
 
-        {/* CATEGORIES GRID */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {categories.map(category => {
-            const count = products.filter(p => p.category === category.id).length;
-            const categoryProducts = products.filter(p => p.category === category.id);
-            const priceRange = categoryProducts.length > 0
-              ? `$${Math.min(...categoryProducts.map(p => p.price)).toLocaleString()} - $${Math.max(...categoryProducts.map(p => p.price)).toLocaleString()}`
-              : 'N/A';
-
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+          {categories.map(cat => {
+            const count = products.filter(p => p.category === cat.id).length;
             return (
-              <a
-                key={category.id}
-                href={`/vault?category=${category.id}`}
-                className="group relative aspect-square bg-gradient-to-br from-steel to-obsidian
-                         border border-white/10 hover:border-gold-royal/50 transition-all duration-500
-                         overflow-hidden hover:-translate-y-2 hover:shadow-luxury"
+              <Link
+                key={cat.id}
+                href={`/vault?category=${cat.id}`}
+                className="group relative aspect-square bg-steel overflow-hidden"
               >
-                {/* Icon */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-7xl opacity-20 group-hover:opacity-30 group-hover:scale-110 transition-all duration-500 select-none">
-                    {category.icon}
+                  <span className="text-6xl opacity-15 group-hover:opacity-30 group-hover:scale-110 transition-all duration-700 select-none">
+                    {cat.icon}
                   </span>
                 </div>
-
-                {/* Content */}
-                <div className="relative h-full flex flex-col justify-end p-6 bg-gradient-to-t from-black/80 to-transparent">
-                  <h3 className="text-2xl font-bold text-white font-playfair mb-2 group-hover:text-gold-royal transition-colors">
-                    {category.name}
+                <div className="absolute inset-0 glass opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                <div className="relative h-full flex flex-col justify-end p-5 bg-gradient-to-t from-obsidian/80 to-transparent">
+                  <h3 className="text-lg font-cormorant font-semibold text-ivory/70 group-hover:text-ivory transition-colors duration-500 mb-1">
+                    {cat.name}
                   </h3>
-                  <p className="text-sm text-white/60 mb-3">
-                    {category.description}
-                  </p>
-                  <div className="flex items-center justify-between text-xs text-gold-royal/70">
-                    <span>{count} pieces</span>
-                    <span className="text-[10px]">{priceRange}</span>
-                  </div>
+                  <p className="text-[10px] font-sans text-ivory/25">{count} pieces</p>
                 </div>
-
-                {/* Hover overlay */}
-                <div className="absolute inset-0 bg-gradient-to-br from-gold-royal/0 via-gold-royal/5 to-gold-royal/10
-                              opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              </a>
+              </Link>
             );
           })}
         </div>
