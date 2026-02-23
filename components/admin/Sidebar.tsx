@@ -12,7 +12,8 @@ import {
   Settings,
   Menu,
   X,
-  Boxes
+  Boxes,
+  ImageIcon
 } from 'lucide-react'
 import { useState } from 'react'
 
@@ -26,6 +27,7 @@ const navigation: NavItem[] = [
   { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
   { name: 'Products', href: '/admin/products', icon: Package },
   { name: 'Orders', href: '/admin/orders', icon: ShoppingCart },
+  { name: 'Media Manager', href: '/admin/media', icon: ImageIcon },
   { name: 'Inventory', href: '/admin/inventory', icon: Boxes },
   { name: 'Customers', href: '/admin/customers', icon: Users },
   { name: 'Analytics', href: '/admin/analytics', icon: BarChart3 },

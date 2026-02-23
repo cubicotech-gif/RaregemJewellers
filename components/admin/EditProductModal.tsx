@@ -55,7 +55,6 @@ export default function EditProductModal({ isOpen, onClose, onSuccess, product }
     setLoading(true)
 
     try {
-      // Start with required fields
       const productData: any = {
         name: formData.name,
         description: formData.description,
@@ -68,13 +67,8 @@ export default function EditProductModal({ isOpen, onClose, onSuccess, product }
         images: formData.images
       }
 
-      // Add optional fields only if they have values
-      if (formData.sku) {
-        productData.sku = formData.sku
-      }
-      if (formData.cost_price) {
-        productData.cost_price = Number(formData.cost_price)
-      }
+      if (formData.sku) productData.sku = formData.sku
+      if (formData.cost_price) productData.cost_price = Number(formData.cost_price)
 
       const result = await adminApi.updateProduct(product.id, productData)
 
@@ -96,163 +90,118 @@ export default function EditProductModal({ isOpen, onClose, onSuccess, product }
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 overflow-y-auto">
       <div className="bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto my-8">
-        {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-neutral-200 sticky top-0 bg-white z-10">
-          <h2 className="text-2xl font-bold text-neutral-900">Edit Product</h2>
-          <button
-            onClick={onClose}
-            className="p-2 hover:bg-neutral-100 rounded-lg transition-colors"
-          >
+          <div>
+            <h2 className="text-2xl font-bold text-neutral-900">Edit Product</h2>
+            <p className="text-sm text-neutral-500 mt-1">ID: {product.id.slice(0, 8)}...</p>
+          </div>
+          <button onClick={onClose} className="p-2 hover:bg-neutral-100 rounded-lg transition-colors">
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        {/* Form */}
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           {/* Media Upload */}
           <MediaUploader
             productId={product.id}
             existingMedia={formData.images}
             onMediaUpdate={(urls) => setFormData({ ...formData, images: urls })}
+            maxFiles={8}
+            label="Product Images"
           />
 
-          <div className="border-t border-neutral-200 pt-6">
-            {/* Product Name */}
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-neutral-700 mb-2">
-                Product Name *
-              </label>
+          <div className="border-t border-neutral-200 pt-6 space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-neutral-700 mb-2">Product Name *</label>
               <input
-                type="text"
-                required
-                value={formData.name}
+                type="text" required value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full px-4 py-2.5 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               />
             </div>
 
-            {/* Description */}
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-neutral-700 mb-2">
-                Description
-              </label>
+            <div>
+              <label className="block text-sm font-medium text-neutral-700 mb-2">Description</label>
               <textarea
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                className="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full px-4 py-2.5 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 rows={3}
               />
             </div>
 
-            {/* Price & Cost */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-neutral-700 mb-2">
-                  Selling Price * ($)
-                </label>
+                <label className="block text-sm font-medium text-neutral-700 mb-2">Selling Price * ($)</label>
                 <input
-                  type="number"
-                  required
-                  step="0.01"
-                  min="0"
-                  value={formData.price}
+                  type="number" required step="0.01" min="0" value={formData.price}
                   onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-                  className="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-full px-4 py-2.5 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-neutral-700 mb-2">
-                  Cost Price ($)
-                </label>
+                <label className="block text-sm font-medium text-neutral-700 mb-2">Cost Price ($)</label>
                 <input
-                  type="number"
-                  step="0.01"
-                  min="0"
-                  value={formData.cost_price}
+                  type="number" step="0.01" min="0" value={formData.cost_price}
                   onChange={(e) => setFormData({ ...formData, cost_price: e.target.value })}
-                  className="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-full px-4 py-2.5 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 />
               </div>
             </div>
 
-            {/* Category */}
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-neutral-700 mb-2">
-                Category *
-              </label>
+            <div>
+              <label className="block text-sm font-medium text-neutral-700 mb-2">Category *</label>
               <select
-                required
-                value={formData.category}
+                required value={formData.category}
                 onChange={(e) => setFormData({ ...formData, category: e.target.value as 'mens' | 'womens' })}
-                className="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full px-4 py-2.5 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               >
-                <option value="womens">Women's Jewelry</option>
-                <option value="mens">Men's Jewelry</option>
+                <option value="womens">Women&apos;s Jewelry</option>
+                <option value="mens">Men&apos;s Jewelry</option>
               </select>
             </div>
 
-            {/* Gem Type & Metal Type */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-neutral-700 mb-2">
-                  Gemstone Type *
-                </label>
+                <label className="block text-sm font-medium text-neutral-700 mb-2">Gemstone Type *</label>
                 <input
-                  type="text"
-                  required
-                  value={formData.gem_type}
+                  type="text" required value={formData.gem_type}
                   onChange={(e) => setFormData({ ...formData, gem_type: e.target.value })}
-                  className="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-full px-4 py-2.5 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-neutral-700 mb-2">
-                  Metal Type *
-                </label>
+                <label className="block text-sm font-medium text-neutral-700 mb-2">Metal Type *</label>
                 <input
-                  type="text"
-                  required
-                  value={formData.metal_type}
+                  type="text" required value={formData.metal_type}
                   onChange={(e) => setFormData({ ...formData, metal_type: e.target.value })}
-                  className="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-full px-4 py-2.5 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 />
               </div>
             </div>
 
-            {/* Stock & SKU */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-neutral-700 mb-2">
-                  Stock Quantity *
-                </label>
+                <label className="block text-sm font-medium text-neutral-700 mb-2">Stock Quantity *</label>
                 <input
-                  type="number"
-                  required
-                  min="0"
-                  value={formData.stock}
+                  type="number" required min="0" value={formData.stock}
                   onChange={(e) => setFormData({ ...formData, stock: e.target.value })}
-                  className="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-full px-4 py-2.5 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-neutral-700 mb-2">
-                  SKU (Optional)
-                </label>
+                <label className="block text-sm font-medium text-neutral-700 mb-2">SKU (Optional)</label>
                 <input
-                  type="text"
-                  value={formData.sku}
+                  type="text" value={formData.sku}
                   onChange={(e) => setFormData({ ...formData, sku: e.target.value })}
-                  className="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-full px-4 py-2.5 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 />
               </div>
             </div>
 
-            {/* Featured */}
-            <div className="flex items-center gap-3 mb-4">
+            <div className="flex items-center gap-3">
               <input
-                type="checkbox"
-                id="featured-edit"
-                checked={formData.featured}
+                type="checkbox" id="featured-edit" checked={formData.featured}
                 onChange={(e) => setFormData({ ...formData, featured: e.target.checked })}
                 className="w-4 h-4 text-purple-600 rounded focus:ring-2 focus:ring-purple-500"
               />
@@ -262,11 +211,9 @@ export default function EditProductModal({ isOpen, onClose, onSuccess, product }
             </div>
           </div>
 
-          {/* Buttons */}
           <div className="flex gap-3 pt-4 border-t border-neutral-200">
             <button
-              type="submit"
-              disabled={loading}
+              type="submit" disabled={loading}
               className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? (
@@ -281,11 +228,7 @@ export default function EditProductModal({ isOpen, onClose, onSuccess, product }
                 </>
               )}
             </button>
-            <button
-              type="button"
-              onClick={onClose}
-              className="px-4 py-3 bg-neutral-200 text-neutral-700 rounded-lg hover:bg-neutral-300 transition-colors"
-            >
+            <button type="button" onClick={onClose} className="px-4 py-3 bg-neutral-200 text-neutral-700 rounded-lg hover:bg-neutral-300 transition-colors">
               Cancel
             </button>
           </div>

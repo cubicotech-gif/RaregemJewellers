@@ -32,18 +32,19 @@ const testimonials = [
 
 export function TestimonialsSection() {
   return (
-    <section className="py-[100px] bg-kronos-black">
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-[120px] bg-kronos-black relative overflow-hidden">
+      {/* Ambient background */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_50%,rgba(212,175,55,0.03),transparent_60%)]" />
+
+      <div className="relative z-10 max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-20">
-          <div className="flex items-center justify-center gap-4 mb-6">
-            <div className="w-16 h-px bg-kronos-gold/30"></div>
-            <span className="text-xs font-sans font-semibold text-kronos-gold uppercase tracking-[0.3em]">
+          <div className="diamond-ornament max-w-xs mx-auto mb-8">
+            <span className="text-[11px] font-sans font-semibold text-kronos-gold uppercase tracking-[0.35em] whitespace-nowrap">
               Testimonials
             </span>
-            <div className="w-16 h-px bg-kronos-gold/30"></div>
           </div>
-          <h2 className="font-display text-4xl md:text-5xl font-semibold text-kronos-white mb-5 tracking-tight">
+          <h2 className="font-display text-4xl md:text-display font-semibold text-kronos-white mb-5 tracking-tight">
             Stories of Forever
           </h2>
           <p className="text-lg text-kronos-muted max-w-xl mx-auto font-sans font-light leading-relaxed">
@@ -56,31 +57,34 @@ export function TestimonialsSection() {
           {testimonials.map((testimonial, index) => (
             <div
               key={index}
-              className="bg-kronos-brown border border-kronos-gold/5 p-8 lg:p-10 hover:border-kronos-gold/15 transition-all duration-500 group"
+              className="surface-luxury p-8 lg:p-10 hover:border-kronos-gold/20 transition-all duration-700 group hover-lift relative overflow-hidden"
             >
+              {/* Subtle gold accent corner */}
+              <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-kronos-gold/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+
               {/* Quote Icon */}
-              <Quote className="w-8 h-8 text-kronos-gold/20 mb-6" />
+              <Quote className="w-8 h-8 text-kronos-gold/15 mb-6 group-hover:text-kronos-gold/30 transition-colors duration-500" />
 
               {/* Stars */}
-              <div className="flex gap-1 mb-5">
+              <div className="flex gap-1.5 mb-5">
                 {[...Array(testimonial.rating)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-kronos-gold text-kronos-gold" />
+                  <Star key={i} className="w-3.5 h-3.5 fill-kronos-gold text-kronos-gold" />
                 ))}
               </div>
 
               {/* Quote Text */}
-              <p className="text-kronos-white/85 mb-8 leading-[1.8] font-sans text-[15px]">
+              <p className="text-kronos-white/80 mb-8 leading-[1.85] font-sans text-[15px]">
                 &ldquo;{testimonial.text}&rdquo;
               </p>
 
               {/* Ring name */}
-              <p className="text-xs text-kronos-gold uppercase tracking-[0.15em] mb-6 font-sans font-medium">
+              <p className="text-[10px] text-kronos-gold uppercase tracking-[0.2em] mb-6 font-sans font-medium">
                 Purchased: {testimonial.ring}
               </p>
 
               {/* Author */}
-              <div className="flex items-center gap-4 pt-6 border-t border-kronos-gold/10">
-                <div className="relative w-11 h-11 overflow-hidden">
+              <div className="flex items-center gap-4 pt-6 border-t border-kronos-gold/8">
+                <div className="relative w-11 h-11 overflow-hidden border border-kronos-gold/20">
                   <Image
                     src={testimonial.image}
                     alt={testimonial.name}

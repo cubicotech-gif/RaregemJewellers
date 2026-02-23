@@ -27,7 +27,6 @@ export function FeaturedProducts() {
         .from('products')
         .select('*')
         .eq('featured', true)
-        .eq('category', 'mens')
         .limit(4)
 
       if (data && !error) {
@@ -40,18 +39,20 @@ export function FeaturedProducts() {
   }, [])
 
   return (
-    <section className="py-[100px] bg-kronos-black">
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-[120px] bg-kronos-black relative overflow-hidden">
+      {/* Background mesh */}
+      <div className="absolute inset-0 bg-gradient-mesh opacity-50" />
+      <div className="absolute inset-0 particle-bg opacity-30" />
+
+      <div className="relative z-10 max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-20">
-          <div className="flex items-center justify-center gap-4 mb-6">
-            <div className="w-16 h-px bg-kronos-gold/30"></div>
-            <span className="text-xs font-sans font-semibold text-kronos-gold uppercase tracking-[0.3em]">
+          <div className="diamond-ornament max-w-xs mx-auto mb-8">
+            <span className="text-[11px] font-sans font-semibold text-kronos-gold uppercase tracking-[0.35em] whitespace-nowrap">
               Curated Selection
             </span>
-            <div className="w-16 h-px bg-kronos-gold/30"></div>
           </div>
-          <h2 className="font-display text-4xl md:text-5xl font-semibold text-kronos-white mb-5 tracking-tight">
+          <h2 className="font-display text-4xl md:text-display font-semibold text-kronos-white mb-5 tracking-tight">
             Statement Pieces
           </h2>
           <p className="text-lg text-kronos-muted max-w-xl mx-auto font-sans font-light leading-relaxed">
@@ -60,14 +61,14 @@ export function FeaturedProducts() {
           </p>
         </div>
 
-        {/* Products Grid - 4 columns desktop */}
+        {/* Products Grid */}
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[...Array(4)].map((_, i) => (
               <div key={i}>
-                <div className="shimmer aspect-[3/4] mb-5"></div>
-                <div className="shimmer h-4 w-3/4 mb-2"></div>
-                <div className="shimmer h-4 w-1/2"></div>
+                <div className="shimmer aspect-[3/4] mb-5" />
+                <div className="shimmer h-4 w-3/4 mb-2" />
+                <div className="shimmer h-4 w-1/2" />
               </div>
             ))}
           </div>
@@ -80,11 +81,11 @@ export function FeaturedProducts() {
         )}
 
         {/* View All Button */}
-        <div className="text-center mt-16">
+        <div className="text-center mt-20">
           <Link href="/shop">
             <Button variant="gold" size="lg" className="group">
               View All Rings
-              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
+              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1.5 transition-transform duration-300" />
             </Button>
           </Link>
         </div>
@@ -94,35 +95,56 @@ export function FeaturedProducts() {
 }
 
 function ProductCard({ product }: { product: Product }) {
+  const [isHovered, setIsHovered] = useState(false)
+
   return (
-    <Link href={`/product/${product.id}`} className="group block">
+    <Link
+      href={`/product/${product.id}`}
+      className="group block"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       {/* Image Container */}
-      <div className="relative aspect-[3/4] overflow-hidden bg-kronos-brown mb-5">
+      <div className="relative aspect-[3/4] overflow-hidden bg-kronos-brown mb-5 hover-gold-glow">
         <Image
-          src={product.images[0] || 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=800&q=80'}
+          src={product.images?.[0] || 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=800&q=80'}
           alt={product.name}
           fill
-          className="object-cover transition-transform duration-700 group-hover:scale-105"
+          className="object-cover transition-all duration-700 group-hover:scale-105"
         />
-        {/* Hover overlay */}
-        <div className="absolute inset-0 bg-kronos-black/0 group-hover:bg-kronos-black/20 transition-all duration-500"></div>
+
+        {/* Hover overlays */}
+        <div className="absolute inset-0 bg-gradient-to-t from-kronos-black/60 via-kronos-black/10 to-transparent opacity-60 group-hover:opacity-80 transition-all duration-500" />
+        <div className="absolute inset-0 bg-kronos-gold/0 group-hover:bg-kronos-gold/5 transition-all duration-700" />
 
         {/* Gem type badge */}
         <div className="absolute top-4 left-4">
-          <span className="text-[10px] font-sans font-semibold text-kronos-gold uppercase tracking-[0.2em] bg-kronos-black/70 backdrop-blur-sm px-3 py-1.5 border border-kronos-gold/20">
+          <span className="text-[10px] font-sans font-semibold text-kronos-gold uppercase tracking-[0.2em] glass-effect px-3 py-1.5">
             {product.gem_type}
           </span>
         </div>
 
-        {/* Gold glow on hover */}
-        <div className="absolute inset-x-0 bottom-0 h-px bg-kronos-gold/0 group-hover:bg-kronos-gold/40 transition-all duration-500"></div>
+        {/* Quick view on hover */}
+        <div className={`absolute inset-x-4 bottom-4 transition-all duration-500 ${isHovered ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
+          <div className="glass-gold px-4 py-2.5 text-center">
+            <span className="text-[10px] font-sans font-semibold text-kronos-gold uppercase tracking-[0.2em]">
+              View Details
+            </span>
+          </div>
+        </div>
+
+        {/* Gold bottom line */}
+        <div className="absolute inset-x-0 bottom-0 h-[2px] bg-kronos-gold/0 group-hover:bg-kronos-gold/50 transition-all duration-700" />
       </div>
 
       {/* Product Info */}
       <div>
-        <h3 className="font-display text-lg font-medium text-kronos-white group-hover:text-kronos-gold transition-colors duration-300 mb-1 tracking-wide">
+        <h3 className="font-display text-lg font-medium text-kronos-white group-hover:text-kronos-gold transition-colors duration-400 mb-1 tracking-wide">
           {product.name}
         </h3>
+        {product.tagline && (
+          <p className="text-xs text-kronos-muted/70 font-sans mb-2 line-clamp-1">{product.tagline}</p>
+        )}
         <span className="text-lg font-sans font-semibold text-kronos-gold">
           ${product.price.toLocaleString()}
         </span>
