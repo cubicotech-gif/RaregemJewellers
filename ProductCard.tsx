@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { Heart, Eye, ShoppingBag, Sparkles } from 'lucide-react';
-import type { Product } from '@/data/products';
+import type { Product } from '@/products-database';
 
 interface ProductCardProps {
   product: Product;

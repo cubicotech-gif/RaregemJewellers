@@ -3,7 +3,7 @@
 
 import Link from 'next/link';
 import { ArrowRight, Sparkles } from 'lucide-react';
-import { getProductsByCategory } from '@/data/products';
+import { getProductsByCategory } from '@/products-database';
 
 const COLLECTIONS = [
   {

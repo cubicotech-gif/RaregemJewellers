@@ -3,7 +3,7 @@
 
 import { useState } from 'react';
 import ProductCard from './ProductCard';
-import { products, categories, type Product } from '@/data/products';
+import { products, categories, type Product } from '@/products-database';
 import { Filter, SlidersHorizontal } from 'lucide-react';
 
 type CategoryFilter = Product['category'] | 'all';
