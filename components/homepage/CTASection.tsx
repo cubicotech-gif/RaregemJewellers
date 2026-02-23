@@ -4,45 +4,63 @@ import Link from 'next/link'
 
 export function CTASection() {
   return (
-    <section className="py-32 bg-gradient-to-b from-brand-black to-brand-charcoal relative overflow-hidden">
-      {/* Background Effect */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-brand-gold via-transparent to-transparent"></div>
+    <section className="py-[120px] bg-kronos-brown relative overflow-hidden">
+      {/* Background Effects */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(201,169,110,0.06),transparent_70%)]"></div>
+        {/* Decorative corner lines */}
+        <div className="absolute top-0 left-0 w-32 h-32 border-t border-l border-kronos-gold/10"></div>
+        <div className="absolute bottom-0 right-0 w-32 h-32 border-b border-r border-kronos-gold/10"></div>
       </div>
 
-      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        {/* Decorative label */}
+        <div className="flex items-center justify-center gap-4 mb-10">
+          <div className="w-12 h-px bg-kronos-gold/30"></div>
+          <span className="text-xs font-sans font-semibold text-kronos-gold uppercase tracking-[0.3em]">
+            Begin Your Journey
+          </span>
+          <div className="w-12 h-px bg-kronos-gold/30"></div>
+        </div>
+
         {/* Headline */}
-        <h2 className="font-display text-4xl md:text-6xl font-bold text-brand-cream mb-6 uppercase">
+        <h2 className="font-display text-4xl md:text-[3.5rem] font-bold text-kronos-white mb-4 tracking-tight leading-[1.05]">
           Ready To Find Your
-          <span className="block gradient-gold-text">Forever Ring?</span>
+        </h2>
+        <h2 className="font-display text-4xl md:text-[3.5rem] font-bold gradient-gold-text mb-8 tracking-tight leading-[1.05]">
+          Forever Ring?
         </h2>
 
         {/* Subtext */}
-        <p className="text-xl md:text-2xl text-brand-gray mb-12 max-w-2xl mx-auto leading-relaxed">
-          Every ring tells a story. What's yours? Let's create something
+        <p className="text-lg text-kronos-muted mb-14 max-w-xl mx-auto leading-relaxed font-sans font-light">
+          Every ring tells a story. Let us help you create something
           as rare and meaningful as your commitment.
         </p>
 
         {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
           <Link href="/shop">
-            <Button variant="gold" size="xl" className="group">
+            <Button variant="filled" size="xl" className="group min-w-[240px]">
               Shop Engagement Rings
-              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="ml-3 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
             </Button>
           </Link>
           <Link href="/contact">
-            <Button variant="outline" size="xl">
-              <MessageCircle className="mr-2 h-5 w-5" />
+            <Button variant="outline" size="xl" className="min-w-[240px]">
+              <MessageCircle className="mr-3 h-4 w-4" />
               Talk To An Expert
             </Button>
           </Link>
         </div>
 
         {/* Trust Line */}
-        <p className="mt-12 text-sm text-brand-gray uppercase tracking-wider">
-          Free Worldwide Shipping • Lifetime Warranty • 30-Day Returns
-        </p>
+        <div className="mt-16 flex items-center justify-center gap-6 text-[11px] text-kronos-muted/60 uppercase tracking-[0.15em] font-sans">
+          <span>Free Worldwide Shipping</span>
+          <div className="w-1 h-1 bg-kronos-gold/30 rounded-full"></div>
+          <span>Lifetime Warranty</span>
+          <div className="w-1 h-1 bg-kronos-gold/30 rounded-full"></div>
+          <span>30-Day Returns</span>
+        </div>
       </div>
     </section>
   )

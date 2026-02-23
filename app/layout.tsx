@@ -17,9 +17,9 @@ const playfair = Playfair_Display({
 })
 
 export const metadata: Metadata = {
-  title: 'Rare Gems Jewelry - Men\'s Engagement Rings',
-  description: 'Forge your forever with rare gems as unique as your love. Premium men\'s engagement rings featuring alexandrite, tanzanite, and more.',
-  keywords: 'rare gems, mens engagement rings, luxury jewelry, alexandrite, tanzanite, mens rings, engagement rings',
+  title: 'KRONOS - Men\'s Engagement Rings | Rare Gems Jewelry',
+  description: 'Discover KRONOS - premium men\'s engagement rings featuring rare sapphires, emeralds, rubies, and diamonds. Handcrafted luxury for the modern man.',
+  keywords: 'KRONOS, mens engagement rings, luxury jewelry, sapphire rings, emerald rings, ruby rings, diamond rings, mens rings',
 }
 
 export default function RootLayout({

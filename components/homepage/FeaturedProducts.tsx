@@ -2,13 +2,10 @@
 
 import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
-import { Card } from '@/components/ui/card-luxury'
-import { Badge } from '@/components/ui/badge-luxury'
 import { Button } from '@/components/ui/button-luxury'
-import { H2, Lead } from '@/components/ui/typography'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Eye } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 
 interface Product {
   id: string
@@ -17,6 +14,7 @@ interface Product {
   gem_type: string
   images: string[]
   category: string
+  tagline?: string
 }
 
 export function FeaturedProducts() {
@@ -30,7 +28,7 @@ export function FeaturedProducts() {
         .select('*')
         .eq('featured', true)
         .eq('category', 'mens')
-        .limit(6)
+        .limit(4)
 
       if (data && !error) {
         setProducts(data)
@@ -42,30 +40,39 @@ export function FeaturedProducts() {
   }, [])
 
   return (
-    <section className="py-24 bg-gradient-dark">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-[100px] bg-kronos-black">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <H2 className="text-brand-gold mb-4">
-            Statement Pieces For The Modern Man
-          </H2>
-          <Lead className="max-w-2xl mx-auto">
-            Each ring tells a story. Handcrafted with rare gems that command attention
-            and respect your commitment.
-          </Lead>
+        <div className="text-center mb-20">
+          <div className="flex items-center justify-center gap-4 mb-6">
+            <div className="w-16 h-px bg-kronos-gold/30"></div>
+            <span className="text-xs font-sans font-semibold text-kronos-gold uppercase tracking-[0.3em]">
+              Curated Selection
+            </span>
+            <div className="w-16 h-px bg-kronos-gold/30"></div>
+          </div>
+          <h2 className="font-display text-4xl md:text-5xl font-semibold text-kronos-white mb-5 tracking-tight">
+            Statement Pieces
+          </h2>
+          <p className="text-lg text-kronos-muted max-w-xl mx-auto font-sans font-light leading-relaxed">
+            Handcrafted rings featuring rare gems that command attention
+            and honor your commitment.
+          </p>
         </div>
 
-        {/* Products Grid */}
+        {/* Products Grid - 4 columns desktop */}
         {loading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[...Array(6)].map((_, i) => (
-              <div key={i} className="animate-pulse">
-                <div className="bg-brand-charcoal h-80 rounded-lg"></div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[...Array(4)].map((_, i) => (
+              <div key={i}>
+                <div className="shimmer aspect-[3/4] mb-5"></div>
+                <div className="shimmer h-4 w-3/4 mb-2"></div>
+                <div className="shimmer h-4 w-1/2"></div>
               </div>
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {products.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
@@ -73,10 +80,11 @@ export function FeaturedProducts() {
         )}
 
         {/* View All Button */}
-        <div className="text-center mt-12">
+        <div className="text-center mt-16">
           <Link href="/shop">
-            <Button variant="outline" size="lg">
+            <Button variant="gold" size="lg" className="group">
               View All Rings
+              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
             </Button>
           </Link>
         </div>
@@ -86,53 +94,39 @@ export function FeaturedProducts() {
 }
 
 function ProductCard({ product }: { product: Product }) {
-  const [isHovered, setIsHovered] = useState(false)
-
   return (
-    <Link href={`/product/${product.id}`}>
-      <Card
-        className="group cursor-pointer overflow-hidden"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
-        {/* Image Container */}
-        <div className="relative aspect-square overflow-hidden bg-brand-black">
-          <Image
-            src={product.images[0] || 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=800&q=80'}
-            alt={product.name}
-            fill
-            className="object-cover transition-transform duration-500 group-hover:scale-110"
-          />
+    <Link href={`/product/${product.id}`} className="group block">
+      {/* Image Container */}
+      <div className="relative aspect-[3/4] overflow-hidden bg-kronos-brown mb-5">
+        <Image
+          src={product.images[0] || 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=800&q=80'}
+          alt={product.name}
+          fill
+          className="object-cover transition-transform duration-700 group-hover:scale-105"
+        />
+        {/* Hover overlay */}
+        <div className="absolute inset-0 bg-kronos-black/0 group-hover:bg-kronos-black/20 transition-all duration-500"></div>
 
-          {/* Gem Badge */}
-          <div className="absolute top-4 right-4 z-10">
-            <Badge variant="gem">
-              {product.gem_type}
-            </Badge>
-          </div>
-
-          {/* Hover Overlay */}
-          <div className={`absolute inset-0 bg-brand-black/80 flex items-center justify-center transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
-            <Button variant="gold" size="lg">
-              <Eye className="mr-2 h-4 w-4" />
-              View Details
-            </Button>
-          </div>
+        {/* Gem type badge */}
+        <div className="absolute top-4 left-4">
+          <span className="text-[10px] font-sans font-semibold text-kronos-gold uppercase tracking-[0.2em] bg-kronos-black/70 backdrop-blur-sm px-3 py-1.5 border border-kronos-gold/20">
+            {product.gem_type}
+          </span>
         </div>
 
-        {/* Product Info */}
-        <div className="p-6">
-          <h3 className="font-display text-xl font-semibold text-brand-cream uppercase tracking-wide mb-2 group-hover:text-brand-gold transition-colors">
-            {product.name}
-          </h3>
+        {/* Gold glow on hover */}
+        <div className="absolute inset-x-0 bottom-0 h-px bg-kronos-gold/0 group-hover:bg-kronos-gold/40 transition-all duration-500"></div>
+      </div>
 
-          <div className="flex items-center justify-between">
-            <span className="text-2xl font-bold text-brand-gold">
-              ${product.price.toLocaleString()}
-            </span>
-          </div>
-        </div>
-      </Card>
+      {/* Product Info */}
+      <div>
+        <h3 className="font-display text-lg font-medium text-kronos-white group-hover:text-kronos-gold transition-colors duration-300 mb-1 tracking-wide">
+          {product.name}
+        </h3>
+        <span className="text-lg font-sans font-semibold text-kronos-gold">
+          ${product.price.toLocaleString()}
+        </span>
+      </div>
     </Link>
   )
 }

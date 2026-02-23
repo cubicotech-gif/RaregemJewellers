@@ -63,7 +63,7 @@ export function ProductCard({ product }: ProductCardProps) {
             {product.gem_type}
           </Badge>
           {product.stock === 0 && (
-            <Badge variant="burgundy">
+            <Badge variant="rose">
               Sold Out
             </Badge>
           )}

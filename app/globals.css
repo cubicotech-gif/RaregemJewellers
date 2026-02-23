@@ -4,35 +4,35 @@
 
 @layer base {
   :root {
-    --background: 26 26 26; /* #1a1a1a */
-    --foreground: 232 232 232; /* #E8E8E8 */
+    --background: 13 13 13;
+    --foreground: 245 240 232;
 
-    --card: 45 45 45; /* #2d2d2d */
-    --card-foreground: 232 232 232;
+    --card: 26 20 16;
+    --card-foreground: 245 240 232;
 
-    --popover: 26 26 26;
-    --popover-foreground: 232 232 232;
+    --popover: 13 13 13;
+    --popover-foreground: 245 240 232;
 
-    --primary: 212 175 55; /* Gold */
-    --primary-foreground: 26 26 26;
+    --primary: 201 169 110;
+    --primary-foreground: 13 13 13;
 
-    --secondary: 45 45 45;
-    --secondary-foreground: 232 232 232;
+    --secondary: 26 20 16;
+    --secondary-foreground: 245 240 232;
 
-    --muted: 45 45 45;
-    --muted-foreground: 136 136 136;
+    --muted: 26 20 16;
+    --muted-foreground: 168 155 140;
 
-    --accent: 212 175 55;
-    --accent-foreground: 26 26 26;
+    --accent: 201 169 110;
+    --accent-foreground: 13 13 13;
 
-    --destructive: 139 0 0;
-    --destructive-foreground: 232 232 232;
+    --destructive: 139 58 58;
+    --destructive-foreground: 245 240 232;
 
-    --border: 45 45 45;
-    --input: 45 45 45;
-    --ring: 212 175 55;
+    --border: 26 20 16;
+    --input: 26 20 16;
+    --ring: 201 169 110;
 
-    --radius: 0.5rem;
+    --radius: 0rem;
   }
 }
 
@@ -40,40 +40,104 @@
   * {
     @apply border-border;
   }
+
   body {
-    @apply bg-brand-black text-brand-cream font-sans;
+    @apply bg-kronos-black text-kronos-white font-sans;
     font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-display;
   }
+
+  ::selection {
+    background: rgba(201, 169, 110, 0.3);
+    color: #F5F0E8;
+  }
 }
 
 @layer utilities {
-  /* Text Shadows for Luxury Feel */
   .text-shadow-gold {
-    text-shadow: 0 2px 10px rgba(212, 175, 55, 0.5);
+    text-shadow: 0 2px 20px rgba(201, 169, 110, 0.4);
   }
 
   .text-shadow-dark {
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
   }
 
-  /* Smooth Transitions */
   .transition-luxury {
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  /* Glass Effect */
   .glass-effect {
-    background: rgba(45, 45, 45, 0.8);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(212, 175, 55, 0.1);
+    background: rgba(26, 20, 16, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(201, 169, 110, 0.15);
   }
 
-  /* Gradient Text */
   .gradient-gold-text {
     @apply bg-gradient-gold bg-clip-text text-transparent;
   }
+
+  .gold-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201, 169, 110, 0.4), transparent);
+  }
+
+  .gold-line-left {
+    position: relative;
+    padding-left: 1.5rem;
+  }
+  .gold-line-left::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, #C9A96E, transparent);
+  }
+
+  .shimmer {
+    background: linear-gradient(90deg, #1A1410 25%, #2a2018 50%, #1A1410 75%);
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+  }
+
+  .hover-gold-glow {
+    transition: box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .hover-gold-glow:hover {
+    box-shadow: 0 0 40px rgba(201, 169, 110, 0.12);
+  }
+
+  .ornament-separator {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .ornament-separator::before,
+  .ornament-separator::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201, 169, 110, 0.3), transparent);
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0D0D0D;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(201, 169, 110, 0.3);
+  border-radius: 0;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(201, 169, 110, 0.5);
 }

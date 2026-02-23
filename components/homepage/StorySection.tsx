@@ -1,90 +1,93 @@
 import { Button } from '@/components/ui/button-luxury'
-import { H2, P } from '@/components/ui/typography'
 import Image from 'next/image'
 import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
 
 export function StorySection() {
   return (
-    <section className="py-24 bg-brand-black">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+    <section className="py-[100px] bg-kronos-black relative overflow-hidden">
+      {/* Subtle background texture */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(201,169,110,0.03),transparent_60%)]"></div>
+
+      <div className="relative max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
           {/* Image Side */}
           <div className="relative">
-            <div className="relative aspect-[4/5] rounded-lg overflow-hidden shadow-luxury">
+            <div className="relative aspect-[4/5] overflow-hidden shadow-luxury">
               <Image
                 src="https://images.unsplash.com/photo-1611955167811-4711904bb9f8?w=800&q=80"
-                alt="Master craftsman creating jewelry"
+                alt="Master craftsman creating a ring at jeweler's bench"
                 fill
                 className="object-cover"
               />
+              {/* Subtle gold border overlay */}
+              <div className="absolute inset-0 border border-kronos-gold/10"></div>
             </div>
 
-            {/* Floating Stats Card */}
-            <div className="absolute -bottom-8 -right-8 glass-effect p-6 rounded-lg max-w-xs">
-              <div className="text-4xl font-display font-bold text-brand-gold mb-2">
+            {/* Floating accent card */}
+            <div className="absolute -bottom-6 -right-6 lg:-right-12 bg-kronos-brown border border-kronos-gold/20 p-8 max-w-[240px] shadow-luxury">
+              <div className="text-3xl font-display font-bold text-kronos-gold mb-2">
                 25+ Years
               </div>
-              <p className="text-sm text-brand-cream">
+              <p className="text-sm text-kronos-muted font-sans leading-relaxed">
                 Of master craftsmanship and rare gem sourcing worldwide
               </p>
             </div>
+
+            {/* Decorative corner accents */}
+            <div className="absolute -top-3 -left-3 w-12 h-12 border-t border-l border-kronos-gold/20"></div>
           </div>
 
           {/* Text Side */}
-          <div>
-            <div className="inline-block px-4 py-2 rounded-full bg-brand-gold/10 border border-brand-gold/30 mb-6">
-              <span className="text-sm text-brand-gold uppercase tracking-wider font-semibold">
+          <div className="lg:pl-8">
+            {/* Label */}
+            <div className="flex items-center gap-3 mb-8">
+              <div className="w-8 h-px bg-kronos-gold"></div>
+              <span className="text-xs font-sans font-semibold text-kronos-gold uppercase tracking-[0.3em]">
                 Our Story
               </span>
             </div>
 
-            <H2 className="text-brand-cream mb-6">
-              Your Love Story Deserves A Rare Gem
-            </H2>
+            <h2 className="font-display text-4xl md:text-5xl font-semibold text-kronos-white mb-8 tracking-tight leading-[1.1]">
+              Where Heritage
+              <span className="block text-kronos-gold">Meets Mastery</span>
+            </h2>
 
-            <P className="mb-6">
-              For over 25 years, we've traveled the world seeking the rarest gemstones
+            <p className="text-base text-kronos-white/80 mb-6 font-sans leading-[1.8]">
+              For over 25 years, we have traveled the world seeking the rarest gemstones
               for men who refuse to settle for ordinary. Each alexandrite, tanzanite,
               and paraiba tourmaline in our collection represents months of careful
               sourcing and selection.
-            </P>
+            </p>
 
-            <P className="mb-6">
+            <p className="text-base text-kronos-white/80 mb-10 font-sans leading-[1.8]">
               We believe your engagement ring should be as unique as your commitment.
-              That's why we specialize in rare gems that change color, catch light,
+              That is why we specialize in rare gems that change color, catch light,
               and tell a story no diamond ever could.
-            </P>
+            </p>
 
-            <div className="grid grid-cols-3 gap-6 py-8 border-y border-brand-gold/20 mb-8">
-              <div>
-                <div className="text-2xl font-display font-bold text-brand-gold mb-1">
-                  500+
+            {/* Stats row */}
+            <div className="grid grid-cols-3 gap-8 py-8 border-y border-kronos-gold/10 mb-10">
+              {[
+                { value: '500+', label: 'Rare Gems' },
+                { value: '100%', label: 'Certified' },
+                { value: 'Lifetime', label: 'Warranty' },
+              ].map((stat) => (
+                <div key={stat.label}>
+                  <div className="text-xl font-display font-bold text-kronos-gold mb-1">
+                    {stat.value}
+                  </div>
+                  <div className="text-[11px] text-kronos-muted uppercase tracking-[0.15em] font-sans">
+                    {stat.label}
+                  </div>
                 </div>
-                <div className="text-xs text-brand-gray uppercase">
-                  Rare Gems
-                </div>
-              </div>
-              <div>
-                <div className="text-2xl font-display font-bold text-brand-gold mb-1">
-                  100%
-                </div>
-                <div className="text-xs text-brand-gray uppercase">
-                  Certified
-                </div>
-              </div>
-              <div>
-                <div className="text-2xl font-display font-bold text-brand-gold mb-1">
-                  Lifetime
-                </div>
-                <div className="text-xs text-brand-gray uppercase">
-                  Warranty
-                </div>
-              </div>
+              ))}
             </div>
 
             <Link href="/about">
-              <Button variant="outline" size="lg">
+              <Button variant="gold" size="lg" className="group">
                 Read Our Full Story
+                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
               </Button>
             </Link>
           </div>

@@ -10,13 +10,23 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Brand Colors
-        'brand-black': '#1a1a1a',      // Primary dark
-        'brand-gold': '#D4AF37',        // Primary accent
-        'brand-burgundy': '#8B0000',    // Secondary accent
-        'brand-cream': '#F5F5DC',       // Neutral light
-        'brand-charcoal': '#2d2d2d',   // Card backgrounds
-        'brand-gray': '#888888',        // Muted text
+        // KRONOS Brand Colors
+        'kronos-black': '#0D0D0D',
+        'kronos-brown': '#1A1410',
+        'kronos-gold': '#C9A96E',
+        'kronos-rose': '#8B3A3A',
+        'kronos-sapphire': '#1B3A5C',
+        'kronos-emerald': '#1B4D3E',
+        'kronos-white': '#F5F0E8',
+        'kronos-muted': '#A89B8C',
+
+        // Legacy aliases for compatibility
+        'brand-black': '#0D0D0D',
+        'brand-gold': '#C9A96E',
+        'brand-burgundy': '#8B3A3A',
+        'brand-cream': '#F5F0E8',
+        'brand-charcoal': '#1A1410',
+        'brand-gray': '#A89B8C',
 
         // UI Colors
         border: "hsl(var(--border))",
@@ -25,24 +35,24 @@ module.exports = {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: '#D4AF37',
-          foreground: '#1a1a1a',
+          DEFAULT: '#C9A96E',
+          foreground: '#0D0D0D',
         },
         secondary: {
-          DEFAULT: '#2d2d2d',
-          foreground: '#E8E8E8',
+          DEFAULT: '#1A1410',
+          foreground: '#F5F0E8',
         },
         destructive: {
-          DEFAULT: '#8B0000',
-          foreground: '#E8E8E8',
+          DEFAULT: '#8B3A3A',
+          foreground: '#F5F0E8',
         },
         muted: {
-          DEFAULT: '#2d2d2d',
-          foreground: '#888888',
+          DEFAULT: '#1A1410',
+          foreground: '#A89B8C',
         },
         accent: {
-          DEFAULT: '#D4AF37',
-          foreground: '#1a1a1a',
+          DEFAULT: '#C9A96E',
+          foreground: '#0D0D0D',
         },
         card: {
           DEFAULT: "hsl(var(--card))",
@@ -58,21 +68,54 @@ module.exports = {
         'sans': ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
       },
       fontSize: {
-        'hero': ['4.5rem', { lineHeight: '1.1', letterSpacing: '-0.02em' }],
-        'display': ['3.5rem', { lineHeight: '1.2', letterSpacing: '-0.01em' }],
+        'hero': ['3.5rem', { lineHeight: '1.05', letterSpacing: '-0.02em' }],
+        'display': ['2.5rem', { lineHeight: '1.15', letterSpacing: '-0.01em' }],
+        'heading3': ['1.75rem', { lineHeight: '1.3' }],
       },
       backgroundImage: {
-        'gradient-gold': 'linear-gradient(135deg, #D4AF37 0%, #F4E4B0 100%)',
-        'gradient-dark': 'linear-gradient(180deg, #1a1a1a 0%, #2d2d2d 100%)',
+        'gradient-gold': 'linear-gradient(135deg, #C9A96E 0%, #E8D5A8 50%, #C9A96E 100%)',
+        'gradient-dark': 'linear-gradient(180deg, #0D0D0D 0%, #1A1410 100%)',
+        'gradient-hero': 'linear-gradient(180deg, rgba(13,13,13,0.3) 0%, rgba(13,13,13,0.7) 50%, #0D0D0D 100%)',
       },
       boxShadow: {
-        'gold': '0 0 30px rgba(212, 175, 55, 0.3)',
-        'luxury': '0 20px 60px rgba(0, 0, 0, 0.8)',
+        'gold': '0 0 40px rgba(201, 169, 110, 0.15)',
+        'gold-lg': '0 0 60px rgba(201, 169, 110, 0.25)',
+        'luxury': '0 25px 80px rgba(0, 0, 0, 0.9)',
+        'card': '0 4px 30px rgba(0, 0, 0, 0.5)',
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      animation: {
+        'fade-in': 'fadeIn 1s ease-out forwards',
+        'fade-up': 'fadeUp 0.8s ease-out forwards',
+        'slide-in': 'slideIn 0.6s ease-out forwards',
+        'pulse-gold': 'pulseGold 3s ease-in-out infinite',
+        'shimmer': 'shimmer 3s linear infinite',
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        fadeUp: {
+          '0%': { opacity: '0', transform: 'translateY(30px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        slideIn: {
+          '0%': { opacity: '0', transform: 'translateX(-20px)' },
+          '100%': { opacity: '1', transform: 'translateX(0)' },
+        },
+        pulseGold: {
+          '0%, 100%': { boxShadow: '0 0 20px rgba(201, 169, 110, 0.1)' },
+          '50%': { boxShadow: '0 0 40px rgba(201, 169, 110, 0.3)' },
+        },
+        shimmer: {
+          '0%': { backgroundPosition: '-200% 0' },
+          '100%': { backgroundPosition: '200% 0' },
+        },
       },
     },
   },
